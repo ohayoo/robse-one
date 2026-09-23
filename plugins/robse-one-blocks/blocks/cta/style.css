@@ -1,0 +1,10 @@
+.wp-block-robse-one-cta { padding: clamp(2rem, 6vw, 4rem); border-radius: 1.5rem; color: #fff; background: #17232d; text-align: center; }
+.wp-block-robse-one-cta h2 { color: inherit; }
+.robse-block-cta__button { display: inline-block; margin-top: .75rem; padding: .8rem 1.4rem; border-radius: 999px; color: #17232d; background: #fff; font-weight: 600; text-decoration: none; }
+.robse-cta-editor__fields { display: grid; gap: .75rem; margin-top: 1rem; }
+.robse-cta-editor__field { display: grid; gap: .25rem; font-size: .875rem; }
+.robse-cta-editor__field input, .robse-cta-editor__field textarea { width: 100%; padding: .5rem; border: 1px solid #8c8f94; border-radius: .25rem; font: inherit; }
+.robse-cta-editor__preview { padding: 1rem; border-radius: 1rem; color: #fff; background: #17232d; text-align: center; }
+.robse-cta-editor__preview h2 { color: inherit; }
+
+@media (prefers-reduced-motion: reduce) { .robse-block-cta__button { transition: none; } }

@@ -1,0 +1,11 @@
+<?php
+/**
+ * Title: 業種セット — クリニック
+ * Slug: robse-one/industry-clinic
+ * Categories: robse-one, featured
+ * Description: 医療機関向けのトップページ構成例。診療内容・時間・所在地を実情報に置き換えてください。
+ * Viewport Width: 1200
+ */
+?>
+<!-- wp:cover {"dimRatio":0,"overlayColor":"mint","textColor":"ink","minHeight":420,"minHeightUnit":"px","align":"wide","className":"robse-hero","layout":{"type":"constrained"}} --><div class="wp-block-cover alignwide robse-hero has-ink-color has-text-color" style="min-height:420px"><span aria-hidden="true" class="wp-block-cover__background has-mint-background-color has-background-dim-0 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:heading {"level":1,"fontSize":"display"} --><h1 class="wp-block-heading has-display-font-size">地域とともに歩む<br>〇〇クリニック</h1><!-- /wp:heading --><!-- wp:paragraph {"fontSize":"large"} --><p class="has-large-font-size">診療方針や大切にしていることを紹介してください。</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>診療時間：平日 00:00〜00:00　休診日：〇曜日</p><!-- /wp:paragraph --></div></div><!-- /wp:cover -->
+<!-- wp:group {"align":"wide","className":"robse-section","layout":{"type":"constrained"}} --><div class="wp-block-group alignwide robse-section"><!-- wp:heading {"level":2} --><h2 class="wp-block-heading">診療のご案内</h2><!-- /wp:heading --><!-- wp:columns --><div class="wp-block-columns"><!-- wp:column --><div class="wp-block-column"><!-- wp:group {"className":"robse-card","layout":{"type":"constrained"}} --><div class="wp-block-group robse-card"><!-- wp:heading {"level":3} --><h3 class="wp-block-heading">診療科目</h3><!-- /wp:heading --><!-- wp:paragraph --><p>診療内容・対象となる症状を具体的に記載してください。</p><!-- /wp:paragraph --></div><!-- /wp:group --></div><!-- /wp:column --><!-- wp:column --><div class="wp-block-column"><!-- wp:group {"className":"robse-card","layout":{"type":"constrained"}} --><div class="wp-block-group robse-card"><!-- wp:heading {"level":3} --><h3 class="wp-block-heading">初診の方へ</h3><!-- /wp:heading --><!-- wp:paragraph --><p>予約方法、持ち物、受診までの流れを記載してください。</p><!-- /wp:paragraph --></div><!-- /wp:group --></div><!-- /wp:column --></div><!-- /wp:columns --><!-- wp:heading {"level":2} --><h2 class="wp-block-heading">アクセス</h2><!-- /wp:heading --><!-- wp:paragraph --><p>住所、最寄り駅、駐車場などの情報を記載してください。</p><!-- /wp:paragraph --></div><!-- /wp:group -->

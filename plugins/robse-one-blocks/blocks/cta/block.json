@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "robse-one/cta",
+  "version": "0.2.1",
+  "title": "ROBSE CTA",
+  "category": "design",
+  "icon": "megaphone",
+  "description": "編集可能なCTAセクション。",
+  "textdomain": "robse-one-blocks",
+  "attributes": {
+    "heading": { "type": "string", "default": "お気軽にご相談ください" },
+    "body": { "type": "string", "default": "サービスについてのご質問やお見積もりをお待ちしています。" },
+    "buttonLabel": { "type": "string", "default": "お問い合わせ" },
+    "buttonUrl": { "type": "string", "default": "" }
+  },
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": { "align": [ "wide", "full" ], "anchor": true, "html": false, "spacing": { "margin": true, "padding": true } }
+}

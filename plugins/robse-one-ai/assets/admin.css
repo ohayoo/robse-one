@@ -1,0 +1,9 @@
+.robse-one-ai { max-width: 900px; }
+.robse-one-ai textarea#robse-one-ai-brief { display: block; width: 100%; max-width: 760px; margin-top: 8px; }
+.robse-ai-consent { display: block; margin: 1rem 0; }
+#robse-one-ai-preview { max-width: 760px; padding-top: 1rem; }
+#robse-one-ai-title, .robse-ai-section-field input, .robse-ai-section-field textarea { display: block; width: 100%; max-width: 100%; box-sizing: border-box; }
+.robse-ai-section-field { margin: 1rem 0; padding: 1rem; border: 1px solid #c3c4c7; }
+.robse-ai-section-field label { display: block; margin-top: .75rem; }
+.robse-ai-error { color: #b32d2e; }
+.robse-ai-message { color: #1d2327; }

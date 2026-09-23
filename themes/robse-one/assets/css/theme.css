@@ -1,0 +1,10 @@
+:root { --robse-radius: var(--wp--custom--robse--radius, 1.25rem); }
+.robse-section { padding-block: var(--wp--custom--robse--section-space, clamp(3rem, 8vw, 7rem)); }
+.robse-card { height: 100%; padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid #e4ebe8; border-radius: var(--robse-radius); background: #fff; }
+.robse-hero { overflow: hidden; border-radius: 1.5rem; }
+.wp-site-blocks > header, .wp-site-blocks > footer { padding-inline: clamp(1rem, 4vw, 3rem); }
+
+.wp-block-button__link, .robse-block-cta__button { transition: background-color .15s ease, color .15s ease; }
+.wp-block-button__link:hover, .robse-block-cta__button:hover { filter: brightness(.92); }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid #176b87; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }

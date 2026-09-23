@@ -1,0 +1,11 @@
+<?php
+/**
+ * Title: 業種セット — 飲食店
+ * Slug: robse-one/industry-restaurant
+ * Categories: robse-one, featured
+ * Description: 飲食店・カフェ向けのトップページ構成例。
+ * Viewport Width: 1200
+ */
+?>
+<!-- wp:cover {"dimRatio":0,"overlayColor":"mint","textColor":"ink","minHeight":420,"minHeightUnit":"px","align":"wide","className":"robse-hero","layout":{"type":"constrained"}} --><div class="wp-block-cover alignwide robse-hero has-ink-color has-text-color" style="min-height:420px"><span aria-hidden="true" class="wp-block-cover__background has-mint-background-color has-background-dim-0 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:heading {"level":1,"fontSize":"display"} --><h1 class="wp-block-heading has-display-font-size">おいしい時間を、<br>いつもの場所で。</h1><!-- /wp:heading --><!-- wp:paragraph {"fontSize":"large"} --><p class="has-large-font-size">お店の特徴と、こだわりを紹介してください。</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>営業時間：00:00〜00:00　定休日：〇曜日</p><!-- /wp:paragraph --></div></div><!-- /wp:cover -->
+<!-- wp:group {"align":"wide","className":"robse-section","layout":{"type":"constrained"}} --><div class="wp-block-group alignwide robse-section"><!-- wp:heading {"level":2} --><h2 class="wp-block-heading">おすすめメニュー</h2><!-- /wp:heading --><!-- wp:columns --><div class="wp-block-columns"><!-- wp:column --><div class="wp-block-column"><!-- wp:group {"className":"robse-card","layout":{"type":"constrained"}} --><div class="wp-block-group robse-card"><!-- wp:heading {"level":3} --><h3 class="wp-block-heading">メニュー名</h3><!-- /wp:heading --><!-- wp:paragraph --><p>内容・食材・価格などを掲載してください。</p><!-- /wp:paragraph --></div><!-- /wp:group --></div><!-- /wp:column --><!-- wp:column --><div class="wp-block-column"><!-- wp:group {"className":"robse-card","layout":{"type":"constrained"}} --><div class="wp-block-group robse-card"><!-- wp:heading {"level":3} --><h3 class="wp-block-heading">季節のおすすめ</h3><!-- /wp:heading --><!-- wp:paragraph --><p>提供期間やアレルギー情報の確認先を記載してください。</p><!-- /wp:paragraph --></div><!-- /wp:group --></div><!-- /wp:column --></div><!-- /wp:columns --><!-- wp:heading {"level":2} --><h2 class="wp-block-heading">店舗情報・アクセス</h2><!-- /wp:heading --><!-- wp:paragraph --><p>住所、電話番号、予約方法、営業時間を正確に記載してください。</p><!-- /wp:paragraph --></div><!-- /wp:group -->
