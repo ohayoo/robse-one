@@ -61,6 +61,7 @@ function robse_one_blocks_get_cms_menu_choices() {
 			continue;
 		}
 		$slug = is_string( $post_type->show_in_menu ) ? $post_type->show_in_menu : 'edit.php?post_type=' . $post_type->name;
+		// translators: %s is the label of a public custom post type.
 		$choices[ $slug ] = sprintf( __( '投稿タイプ: %s', 'robse-one-blocks' ), $post_type->labels->name );
 	}
 	return $choices;

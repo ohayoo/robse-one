@@ -2,7 +2,7 @@
 Contributors: robsejp
 Plugin URI: https://robse.jp/robse-one/
 Requires at least: 6.6
-Tested up to: 7.1.2
+Tested up to: 7.1
 Requires PHP: 7.4
 Stable tag: 0.3.0
 License: GPLv2 or later
