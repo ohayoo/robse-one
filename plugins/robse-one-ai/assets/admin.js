@@ -35,12 +35,12 @@
 
   document.getElementById('robse-one-ai-generate').addEventListener('click', function () {
     if (!consent.checked) {
-      setStatus('外部AIへの送信に同意してください。', true);
+      setStatus(robseOneAi.texts.consent, true);
       consent.focus();
       return;
     }
     if (brief.value.trim().length < 10) {
-      setStatus('依頼内容を10文字以上入力してください。', true);
+      setStatus(robseOneAi.texts.tooShort, true);
       brief.focus();
       return;
     }
@@ -55,9 +55,9 @@
         var fieldset = document.createElement('fieldset');
         fieldset.className = 'robse-ai-section-field';
         var legend = document.createElement('legend');
-        legend.textContent = 'セクション ' + (index + 1);
+        legend.textContent = robseOneAi.texts.section.replace('%d', index + 1);
         var headingLabel = document.createElement('label');
-        headingLabel.textContent = '見出し';
+        headingLabel.textContent = robseOneAi.texts.heading;
         var heading = document.createElement('input');
         heading.type = 'text';
         heading.className = 'robse-ai-heading';
@@ -65,7 +65,7 @@
         heading.value = section.heading;
         headingLabel.appendChild(heading);
         var bodyLabel = document.createElement('label');
-        bodyLabel.textContent = '本文';
+        bodyLabel.textContent = robseOneAi.texts.body;
         var body = document.createElement('textarea');
         body.className = 'robse-ai-body';
         body.rows = 3;
@@ -97,7 +97,7 @@
       setStatus(robseOneAi.texts.success, false);
       var link = document.createElement('a');
       link.href = result.edit_url;
-      link.textContent = '下書きを編集する';
+      link.textContent = robseOneAi.texts.editDraft;
       link.className = 'button';
       link.style.marginLeft = '8px';
       status.appendChild(link);
