@@ -1,6 +1,6 @@
 <?php
 /**
- * Title: 投稿一覧
+ * Title: Post list
  * Slug: robse-one/post-list
  * Categories: robse-one
  * Inserter: false

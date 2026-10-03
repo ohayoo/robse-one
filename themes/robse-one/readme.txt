@@ -3,7 +3,7 @@ Contributors: robsejp
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.2.1
+Stable tag: 0.2.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -27,6 +27,10 @@ The theme does not bundle forms, custom post types, or custom blocks.
 This theme is licensed under the GNU General Public License v2 or later.
 
 == Changelog ==
+
+= 0.2.2 =
+* Write all pattern text in English and make it translatable.
+* Move the text of the 404, search and blog templates into hidden patterns so it can be translated.
 
 = 0.2.1 =
 * Write the theme description in English.

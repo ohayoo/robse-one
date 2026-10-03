@@ -11,7 +11,7 @@ function robse_one_setup() {
 	add_editor_style( 'assets/css/editor.css' );
 	add_theme_support( 'responsive-embeds' );
 	add_theme_support( 'wp-block-styles' );
-	register_block_pattern_category( 'robse-one', array( 'label' => __( 'ROBSE ONE セクション', 'robse-one' ) ) );
+	register_block_pattern_category( 'robse-one', array( 'label' => __( 'ROBSE ONE sections', 'robse-one' ) ) );
 }
 add_action( 'after_setup_theme', 'robse_one_setup' );
 
