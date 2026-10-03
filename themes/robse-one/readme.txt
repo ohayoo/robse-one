@@ -3,7 +3,7 @@ Contributors: robsejp
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.2.0
+Stable tag: 0.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -25,3 +25,12 @@ The theme does not bundle forms, custom post types, or custom blocks.
 
 == License ==
 This theme is licensed under the GNU General Public License v2 or later.
+
+== Changelog ==
+
+= 0.2.1 =
+* Write the theme description in English.
+* Set "Tested up to" to the major version (7.1).
+
+= 0.2.0 =
+* Initial submission.
