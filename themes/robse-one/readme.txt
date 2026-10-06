@@ -1,5 +1,6 @@
 === ROBSE ONE ===
 Contributors: robsejp
+Tags: block-patterns, custom-logo, editor-style, full-site-editing, one-column, wide-blocks
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
@@ -42,6 +43,8 @@ This theme is licensed under the GNU General Public License v2 or later.
 * Make the remaining pattern text (eyebrow labels, phone placeholder and footer credit) translatable.
 * Replace the screenshot with a capture of the current front page.
 * Add copyright and license information for the screenshot to the readme.
+* Add a languages/robse-one.pot translation template.
+* Add a Tags line to the readme matching style.css.
 
 = 0.2.2 =
 * Write all pattern text in English and make it translatable.
