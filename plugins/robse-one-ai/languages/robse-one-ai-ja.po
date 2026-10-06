@@ -1,0 +1,173 @@
+# Copyright (C) 2026 Robse
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr "Project-Id-Version: robse-one-ai\nLanguage: ja\nContent-Type: text/plain; charset=UTF-8\nPlural-Forms: nplurals=1; plural=0;\n"
+
+#. Plugin Name of the plugin
+#: robse-one-ai.php
+#: includes/admin.php:6
+#: includes/admin.php:7
+msgid "ROBSE ONE AI"
+msgstr "ROBSE ONE AI"
+
+#. Description of the plugin
+#: robse-one-ai.php
+msgid "Creates editable page outlines with the OpenAI API, after the editor's consent, and saves reviewed content as page drafts."
+msgstr "編集者の同意のうえで OpenAI API を使ってページ構成案を作り、確認した内容を固定ページの下書きとして保存します。"
+
+#. Author of the plugin
+#: robse-one-ai.php
+msgid "Robse"
+msgstr "Robse"
+
+#: includes/admin.php:14
+msgid "AI settings"
+msgstr "AI 設定"
+
+#: includes/admin.php:29
+msgid "Creating a page outline…"
+msgstr "ページ案を作成しています…"
+
+#: includes/admin.php:30
+msgid "Creating a draft…"
+msgstr "下書きを作成しています…"
+
+#: includes/admin.php:31
+msgid "Something went wrong. Check the settings and your input."
+msgstr "処理に失敗しました。設定と入力内容を確認してください。"
+
+#: includes/admin.php:32
+msgid "Draft created."
+msgstr "下書きを作成しました。"
+
+#: includes/admin.php:33
+#: includes/rest.php:56
+msgid "Please agree to sending your input to the external AI service."
+msgstr "外部 AI への送信に同意してください。"
+
+#: includes/admin.php:34
+msgid "Enter at least 10 characters."
+msgstr "依頼内容を10文字以上入力してください。"
+
+#. translators: %d: section number.
+#: includes/admin.php:36
+#, php-format
+msgid "Section %d"
+msgstr "セクション %d"
+
+#: includes/admin.php:37
+msgid "Heading"
+msgstr "見出し"
+
+#: includes/admin.php:38
+msgid "Body"
+msgstr "本文"
+
+#: includes/admin.php:39
+msgid "Edit the draft"
+msgstr "下書きを編集する"
+
+#: includes/admin.php:52
+msgid "ROBSE ONE AI page outline"
+msgstr "ROBSE ONE AI ページ案"
+
+#: includes/admin.php:53
+msgid "Describe your business to get a page outline. Review and edit it as needed, then save it as a draft."
+msgstr "事業内容を入力すると、ページ構成案を作成して確認できます。内容を確認し、必要に応じて編集してから下書きに保存してください。"
+
+#: includes/admin.php:54
+msgid "Your brief is sent to the OpenAI API. Do not include personal or confidential information, and run this only if you agree to send it."
+msgstr "入力した依頼内容を OpenAI API へ送信します。個人情報や機密情報を入力せず、送信に同意できる場合のみ実行してください。"
+
+#: includes/admin.php:55
+msgid "What page do you want to create?"
+msgstr "どんなページを作りますか ?"
+
+#: includes/admin.php:56
+msgid "Example: A local builder offering custom homes with natural materials, and renovations."
+msgstr "例: 地域密着の工務店。自然素材の注文住宅とリフォームを提供。"
+
+#: includes/admin.php:57
+msgid "I agree that my input will be sent to the OpenAI API."
+msgstr "入力内容を OpenAI API へ送信することに同意します。"
+
+#: includes/admin.php:58
+msgid "Create outline"
+msgstr "ページ案を作る"
+
+#: includes/admin.php:61
+msgid "Review and edit the outline"
+msgstr "ページ案を確認・編集"
+
+#: includes/admin.php:62
+msgid "Page title"
+msgstr "ページタイトル"
+
+#: includes/admin.php:64
+msgid "Save as draft"
+msgstr "下書きとして保存"
+
+#: includes/admin.php:82
+msgid "Settings saved."
+msgstr "設定を保存しました。"
+
+#: includes/admin.php:89
+msgid "ROBSE ONE AI settings"
+msgstr "ROBSE ONE AI 設定"
+
+#: includes/admin.php:90
+msgid "The API key is stored on the server and never sent to the browser. If ROBSE_ONE_AI_API_KEY is defined in wp-config.php, it takes priority over the key in the database."
+msgstr "API キーはサーバー側に保存し、ブラウザーへは送信しません。wp-config.php に ROBSE_ONE_AI_API_KEY を定義すると、データベースのキーより優先します。"
+
+#: includes/admin.php:94
+msgid "Model"
+msgstr "モデル名"
+
+#: includes/admin.php:94
+msgid "Enter the name of a text model available in the OpenAI API."
+msgstr "OpenAI API で利用可能なテキストモデル名を入力してください。"
+
+#: includes/admin.php:95
+msgid "API key"
+msgstr "API キー"
+
+#: includes/admin.php:95
+msgid "A key is saved. Leave this blank to keep the current key."
+msgstr "登録済みです。空欄のまま保存すると現在のキーを保持します。"
+
+#: includes/admin.php:95
+msgid "The key is never shown again on this screen."
+msgstr "キーは画面に再表示しません。"
+
+#: includes/rest.php:60
+msgid "Add an API key in AI settings."
+msgstr "AI 設定に API キーを登録してください。"
+
+#: includes/rest.php:65
+msgid "Please wait a moment before running it again."
+msgstr "続けて実行する場合は、しばらく待ってからお試しください。"
+
+#: includes/rest.php:69
+msgid "Enter a brief between 10 and 4000 characters."
+msgstr "依頼内容は10〜4000文字で入力してください。"
+
+#: includes/rest.php:101
+msgid "Could not connect to the AI service. Check the settings and your network."
+msgstr "AI サービスに接続できませんでした。設定と通信環境を確認してください。"
+
+#: includes/rest.php:106
+msgid "The AI service returned an error."
+msgstr "AI サービスがエラーを返しました。"
+
+#: includes/rest.php:109
+msgid "The AI stopped before finishing the outline. Shorten the brief or choose a different model, then try again."
+msgstr "AI が構成案を最後まで作る前に止まりました。入力文を短くするか、別のモデルを選んでもう一度お試しください。"
+
+#: includes/rest.php:134
+msgid "The AI output could not be read. Change the brief and try again."
+msgstr "AI の出力を読み取れませんでした。依頼内容を変えて再試行してください。"
+
+#: includes/rest.php:150
+msgid "The outline is missing required content. Change the brief and try again."
+msgstr "ページ案に必要な内容が不足しています。依頼内容を変えて再試行してください。"
+

@@ -9,6 +9,16 @@
   var sectionsRoot = document.getElementById('robse-one-ai-sections');
   var status = document.getElementById('robse-one-ai-status');
   var generated = null;
+  var busy = false;
+  var generateButton = document.getElementById('robse-one-ai-generate');
+  var createButton = document.getElementById('robse-one-ai-create');
+  function setBusy(value) {
+    busy = value;
+    generateButton.disabled = value;
+    createButton.disabled = value || !generated;
+    preview.setAttribute('aria-busy', value ? 'true' : 'false');
+  }
+  setBusy(false);
 
   function setStatus(message, error) {
     status.textContent = message || '';
@@ -33,7 +43,8 @@
     });
   }
 
-  document.getElementById('robse-one-ai-generate').addEventListener('click', function () {
+  generateButton.addEventListener('click', function () {
+    if (busy) return;
     if (!consent.checked) {
       setStatus(robseOneAi.texts.consent, true);
       consent.focus();
@@ -45,6 +56,7 @@
       return;
     }
     generated = null;
+    setBusy(true);
     preview.hidden = true;
     setStatus(robseOneAi.texts.working, false);
     api('generate', { brief: brief.value, consent: true }).then(function (result) {
@@ -78,13 +90,16 @@
       preview.hidden = false;
       setStatus('', false);
       titleInput.focus();
+      setBusy(false);
     }).catch(function (error) {
       setStatus(error.message, true);
+      setBusy(false);
     });
   });
 
-  document.getElementById('robse-one-ai-create').addEventListener('click', function () {
-    if (!generated) return;
+  createButton.addEventListener('click', function () {
+    if (!generated || busy) return;
+    setBusy(true);
     var sections = [];
     sectionsRoot.querySelectorAll('.robse-ai-section-field').forEach(function (fieldset) {
       sections.push({
@@ -94,6 +109,8 @@
     });
     setStatus(robseOneAi.texts.creating, false);
     api('draft', { title: titleInput.value, sections: sections }).then(function (result) {
+      generated = null;
+      setBusy(false);
       setStatus(robseOneAi.texts.success, false);
       var link = document.createElement('a');
       link.href = result.edit_url;
@@ -103,6 +120,7 @@
       status.appendChild(link);
     }).catch(function (error) {
       setStatus(error.message, true);
+      setBusy(false);
     });
   });
 }());

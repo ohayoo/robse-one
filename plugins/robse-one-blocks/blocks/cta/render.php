@@ -10,9 +10,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$robse_one_heading = isset( $attributes['heading'] ) ? $attributes['heading'] : '';
-$robse_one_body    = isset( $attributes['body'] ) ? $attributes['body'] : '';
-$robse_one_label   = isset( $attributes['buttonLabel'] ) ? $attributes['buttonLabel'] : '';
+// When an attribute has never been set, use the translated default text (same as the editor).
+$robse_one_heading = isset( $attributes['heading'] ) ? $attributes['heading'] : __( 'Feel free to contact us', 'robse-one-blocks' );
+$robse_one_body    = isset( $attributes['body'] ) ? $attributes['body'] : __( 'We look forward to your questions and quote requests about our services.', 'robse-one-blocks' );
+$robse_one_label   = isset( $attributes['buttonLabel'] ) ? $attributes['buttonLabel'] : __( 'Contact us', 'robse-one-blocks' );
 $robse_one_url     = isset( $attributes['buttonUrl'] ) ? $attributes['buttonUrl'] : '';
 
 $robse_one_markup = '<section ' . get_block_wrapper_attributes( array( 'class' => 'robse-block-cta' ) ) . '><div class="robse-block-cta__inner">';

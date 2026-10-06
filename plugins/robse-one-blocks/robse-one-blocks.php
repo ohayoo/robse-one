@@ -1,17 +1,22 @@
 <?php
 /**
  * Plugin Name: ROBSE ONE Blocks
- * Description: ROBSE ONEのデザインシステムと独立したGutenbergブロックを提供します。
- * Version: 0.2.1
+ * Description: A CTA block, a menu profile for non-administrators and a dashboard editing guide for ROBSE ONE sites.
+ * Version: 0.3.0
  * Requires at least: 6.6
  * Requires PHP: 7.4
  * License: GPL-2.0-or-later
  * Text Domain: robse-one-blocks
+ * Domain Path: /languages
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 function robse_one_blocks_init() {
+	load_plugin_textdomain( 'robse-one-blocks', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	register_block_type( __DIR__ . '/blocks/cta' );
+	register_block_type( __DIR__ . '/blocks/contact' );
+	wp_set_script_translations( 'robse-one-cta-editor-script', 'robse-one-blocks', __DIR__ . '/languages' );
+	wp_set_script_translations( 'robse-one-contact-editor-script', 'robse-one-blocks', __DIR__ . '/languages' );
 }
 add_action( 'init', 'robse_one_blocks_init' );
 
@@ -48,12 +53,12 @@ add_action( 'admin_init', 'robse_one_blocks_register_cms_settings' );
 
 function robse_one_blocks_get_cms_menu_choices() {
 	$choices = array(
-		'index.php'               => __( 'ダッシュボード', 'robse-one-blocks' ),
-		'edit.php'                => __( '投稿', 'robse-one-blocks' ),
-		'edit.php?post_type=page' => __( '固定ページ', 'robse-one-blocks' ),
-		'upload.php'              => __( 'メディア', 'robse-one-blocks' ),
-		'edit-comments.php'       => __( 'コメント', 'robse-one-blocks' ),
-		'profile.php'             => __( 'プロフィール', 'robse-one-blocks' ),
+		'index.php'               => __( 'Dashboard', 'robse-one-blocks' ),
+		'edit.php'                => __( 'Posts', 'robse-one-blocks' ),
+		'edit.php?post_type=page' => __( 'Pages', 'robse-one-blocks' ),
+		'upload.php'              => __( 'Media', 'robse-one-blocks' ),
+		'edit-comments.php'       => __( 'Comments', 'robse-one-blocks' ),
+		'profile.php'             => __( 'Profile', 'robse-one-blocks' ),
 	);
 	$post_types = get_post_types( array( 'public' => true, 'show_ui' => true, '_builtin' => false ), 'objects' );
 	foreach ( $post_types as $post_type ) {
@@ -62,7 +67,7 @@ function robse_one_blocks_get_cms_menu_choices() {
 		}
 		$slug = is_string( $post_type->show_in_menu ) ? $post_type->show_in_menu : 'edit.php?post_type=' . $post_type->name;
 		// translators: %s is the label of a public custom post type.
-		$choices[ $slug ] = sprintf( __( '投稿タイプ: %s', 'robse-one-blocks' ), $post_type->labels->name );
+		$choices[ $slug ] = sprintf( __( 'Post type: %s', 'robse-one-blocks' ), $post_type->labels->name );
 	}
 	return $choices;
 }
@@ -85,7 +90,7 @@ function robse_one_blocks_sanitize_cms_settings( $input ) {
 
 function robse_one_blocks_add_cms_settings_page() {
 	add_options_page(
-		__( 'ROBSE ONE CMSモード', 'robse-one-blocks' ),
+		__( 'ROBSE ONE CMS mode', 'robse-one-blocks' ),
 		__( 'ROBSE ONE CMS', 'robse-one-blocks' ),
 		'manage_options',
 		'robse-one-cms',
@@ -104,24 +109,25 @@ function robse_one_blocks_render_cms_settings() {
 	$labels = robse_one_blocks_get_cms_menu_choices();
 	?>
 	<div class="wrap">
-		<h1><?php esc_html_e( 'ROBSE ONE CMSモード', 'robse-one-blocks' ); ?></h1>
-		<p><?php esc_html_e( '管理者以外のユーザーに表示する標準メニューと公開カスタム投稿タイプを選びます。プラグインが追加するメニューはこの設定の対象外です。', 'robse-one-blocks' ); ?></p>
+		<h1><?php esc_html_e( 'ROBSE ONE CMS mode', 'robse-one-blocks' ); ?></h1>
+		<p><?php esc_html_e( 'Choose the standard menus and public custom post types shown to users who are not administrators. Menus added by other plugins are not affected by this setting.', 'robse-one-blocks' ); ?></p>
 		<form action="options.php" method="post">
 			<?php settings_fields( 'robse_one_cms' ); ?>
 			<?php $name = 'robse_one_cms_mode'; ?>
 			<input type="hidden" name="<?php echo esc_attr( $name ); ?>[enabled]" value="0">
 			<label>
 				<input type="checkbox" name="<?php echo esc_attr( $name ); ?>[enabled]" value="1" <?php checked( $enabled ); ?>>
-				<?php esc_html_e( 'CMSモードを有効にする', 'robse-one-blocks' ); ?>
+				<?php esc_html_e( 'Enable CMS mode', 'robse-one-blocks' ); ?>
 			</label>
-			<h2><?php esc_html_e( '表示するメニュー', 'robse-one-blocks' ); ?></h2>
+			<h2><?php esc_html_e( 'Menus to show', 'robse-one-blocks' ); ?></h2>
 			<?php foreach ( $labels as $slug => $label ) : ?>
 				<label style="display:block;margin:8px 0">
 					<input type="checkbox" name="<?php echo esc_attr( $name ); ?>[menus][]" value="<?php echo esc_attr( $slug ); ?>" <?php checked( in_array( $slug, $selected, true ) ); ?>>
 					<?php echo esc_html( $label ); ?>
 				</label>
 			<?php endforeach; ?>
-			<p class="description"><?php esc_html_e( '管理者には影響しません。標準メニューの表示制御のみを行い、各ユーザーの権限は変更しません。プラグイン独自メニューの制御は各プラグインで行ってください。', 'robse-one-blocks' ); ?></p>
+			<p><strong><?php esc_html_e( 'This profile hides menu links only. It does not change user permissions or prevent layout edits.', 'robse-one-blocks' ); ?></strong></p>
+			<p class="description"><?php esc_html_e( 'Administrators are not affected. Only the visibility of standard menus changes; user capabilities stay the same. Menus added by other plugins are controlled by those plugins.', 'robse-one-blocks' ); ?></p>
 			<?php submit_button(); ?>
 		</form>
 	</div>
@@ -163,20 +169,33 @@ function robse_one_blocks_register_dashboard_guide() {
 	}
 	wp_add_dashboard_widget(
 		'robse_one_client_guide',
-		__( 'ROBSE ONE 編集ガイド', 'robse-one-blocks' ),
+		__( 'ROBSE ONE editing guide', 'robse-one-blocks' ),
 		'robse_one_blocks_render_dashboard_guide'
 	);
 }
 add_action( 'wp_dashboard_setup', 'robse_one_blocks_register_dashboard_guide' );
 
 function robse_one_blocks_render_dashboard_guide() {
+
+	$home = 'page' === get_option( 'show_on_front' ) ? get_post( (int) get_option( 'page_on_front' ) ) : null;
+	$is_one = 'robse-one' === get_template();
+	$home_template = $is_one ? get_block_template( get_stylesheet() . '//front-page' ) : null;
+	$custom = $home_template && ( ! empty( $home_template->wp_id ) || 'custom' === $home_template->source );
+	$page_mode = $is_one && get_theme_mod( 'robse_one_content_home', false ) && $home && ! $custom;
 	?>
-	<p><?php esc_html_e( 'ページや投稿を編集するときは、内容を更新して「更新」を押してください。画像はメディアから追加できます。', 'robse-one-blocks' ); ?></p>
+	<p><?php esc_html_e( 'To edit a page or post, change its content and click "Save". Images can be added from Media.', 'robse-one-blocks' ); ?></p>
+	<?php if ( $is_one ) : ?>
+		<?php if ( $page_mode && current_user_can( 'edit_post', $home->ID ) ) : ?>
+			<p><a class="button button-primary" href="<?php echo esc_url( get_edit_post_link( $home->ID, 'raw' ) ); ?>"><?php esc_html_e( 'Edit the homepage', 'robse-one-blocks' ); ?></a></p>
+		<?php else : ?>
+			<p><?php esc_html_e( 'The homepage is controlled by a site template. Ask your administrator to enable page content mode in Appearance > ROBSE ONE setup, or update the template in the Site Editor.', 'robse-one-blocks' ); ?></p>
+		<?php endif; ?>
+	<?php endif; ?>
 	<ul>
-		<?php if ( current_user_can( 'edit_pages' ) ) : ?><li><a href="<?php echo esc_url( admin_url( 'edit.php?post_type=page' ) ); ?>"><?php esc_html_e( '固定ページを編集', 'robse-one-blocks' ); ?></a></li><?php endif; ?>
-		<?php if ( current_user_can( 'edit_posts' ) ) : ?><li><a href="<?php echo esc_url( admin_url( 'edit.php' ) ); ?>"><?php esc_html_e( '投稿を編集', 'robse-one-blocks' ); ?></a></li><?php endif; ?>
-		<?php if ( current_user_can( 'upload_files' ) ) : ?><li><a href="<?php echo esc_url( admin_url( 'upload.php' ) ); ?>"><?php esc_html_e( '画像・ファイルを管理', 'robse-one-blocks' ); ?></a></li><?php endif; ?>
+		<?php if ( current_user_can( 'edit_pages' ) ) : ?><li><a href="<?php echo esc_url( admin_url( 'edit.php?post_type=page' ) ); ?>"><?php esc_html_e( 'Edit pages', 'robse-one-blocks' ); ?></a></li><?php endif; ?>
+		<?php if ( current_user_can( 'edit_posts' ) ) : ?><li><a href="<?php echo esc_url( admin_url( 'edit.php' ) ); ?>"><?php esc_html_e( 'Edit posts', 'robse-one-blocks' ); ?></a></li><?php endif; ?>
+		<?php if ( current_user_can( 'upload_files' ) ) : ?><li><a href="<?php echo esc_url( admin_url( 'upload.php' ) ); ?>"><?php esc_html_e( 'Manage images and files', 'robse-one-blocks' ); ?></a></li><?php endif; ?>
 	</ul>
-	<p><small><?php esc_html_e( '編集できる範囲はアカウントの権限によって異なります。', 'robse-one-blocks' ); ?></small></p>
+	<p><small><?php esc_html_e( 'What you can edit depends on your account role.', 'robse-one-blocks' ); ?></small></p>
 	<?php
 }

@@ -115,14 +115,15 @@
     "custom": {
       "robse": {
         "radius": "1.25rem",
-        "sectionSpace": "clamp(3rem, 8vw, 7rem)"
+        "sectionSpace": "clamp(3rem, 8vw, 7rem)",
+        "borderColor": "color-mix(in srgb, var(--wp--preset--color--ink) 15%, transparent)"
       }
     }
   },
   "styles": {
     "color": {
-      "background": "#ffffff",
-      "text": "#17232d"
+      "background": "var(--wp--preset--color--white)",
+      "text": "var(--wp--preset--color--ink)"
     },
     "typography": {
       "fontFamily": "var(--wp--preset--font-family--system)",
@@ -139,18 +140,18 @@
           "lineHeight": "1.2"
         },
         "color": {
-          "text": "#17232d"
+          "text": "var(--wp--preset--color--ink)"
         }
       },
       "link": {
         "color": {
-          "text": "#176b87"
+          "text": "var(--wp--preset--color--ocean)"
         }
       },
       "button": {
         "color": {
-          "background": "#176b87",
-          "text": "#ffffff"
+          "background": "var(--wp--preset--color--ocean)",
+          "text": "var(--wp--preset--color--white)"
         },
         "border": {
           "radius": "999px"
@@ -181,5 +182,26 @@
         }
       }
     }
-  }
+  },
+  "customTemplates": [
+    {
+      "name": "homepage-content",
+      "title": "Page content without title",
+      "postTypes": [
+        "page"
+      ]
+    }
+  ],
+  "templateParts": [
+    {
+      "name": "header",
+      "title": "Header",
+      "area": "header"
+    },
+    {
+      "name": "footer",
+      "title": "Footer",
+      "area": "footer"
+    }
+  ]
 }

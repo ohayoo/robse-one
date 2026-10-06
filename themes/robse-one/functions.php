@@ -19,3 +19,5 @@ function robse_one_enqueue_styles() {
 	wp_enqueue_style( 'robse-one-theme', get_theme_file_uri( 'assets/css/theme.css' ), array(), wp_get_theme()->get( 'Version' ) );
 }
 add_action( 'wp_enqueue_scripts', 'robse_one_enqueue_styles' );
+
+require_once get_template_directory() . '/inc/getting-started.php';

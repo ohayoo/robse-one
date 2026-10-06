@@ -1,0 +1,192 @@
+# Copyright (C) 2026 
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr "Project-Id-Version: robse-one-blocks\nLanguage: ja\nContent-Type: text/plain; charset=UTF-8\nPlural-Forms: nplurals=1; plural=0;\n"
+
+#. Plugin Name of the plugin
+#: robse-one-blocks.php
+msgid "ROBSE ONE Blocks"
+msgstr "ROBSE ONE Blocks"
+
+#. Description of the plugin
+#: robse-one-blocks.php
+msgid "A CTA block, a menu profile for non-administrators and a dashboard editing guide for ROBSE ONE sites."
+msgstr "ROBSE ONE のサイト向けの CTA ブロック、管理者以外のメニュー表示設定、ダッシュボードの編集ガイドです。"
+
+#: blocks/contact/render.php:9
+#: blocks/contact/index.js:14
+msgid "Contact"
+msgstr "お問い合わせ"
+
+#: blocks/cta/render.php:14
+#: blocks/cta/index.js:9
+msgid "Feel free to contact us"
+msgstr "お気軽にご相談ください"
+
+#: blocks/cta/render.php:15
+#: blocks/cta/index.js:10
+msgid "We look forward to your questions and quote requests about our services."
+msgstr "サービスについてのご質問やお見積もりをお待ちしています。"
+
+#: blocks/cta/render.php:16
+#: blocks/cta/index.js:11
+msgid "Contact us"
+msgstr "お問い合わせ"
+
+#: robse-one-blocks.php:56
+msgid "Dashboard"
+msgstr "ダッシュボード"
+
+#: robse-one-blocks.php:57
+msgid "Posts"
+msgstr "投稿"
+
+#: robse-one-blocks.php:58
+msgid "Pages"
+msgstr "固定ページ"
+
+#: robse-one-blocks.php:59
+msgid "Media"
+msgstr "メディア"
+
+#: robse-one-blocks.php:60
+msgid "Comments"
+msgstr "コメント"
+
+#: robse-one-blocks.php:61
+msgid "Profile"
+msgstr "プロフィール"
+
+#. translators: %s is the label of a public custom post type.
+#: robse-one-blocks.php:70
+#, php-format
+msgid "Post type: %s"
+msgstr "投稿タイプ: %s"
+
+#: robse-one-blocks.php:93
+#: robse-one-blocks.php:112
+msgid "ROBSE ONE CMS mode"
+msgstr "ROBSE ONE CMS モード"
+
+#: robse-one-blocks.php:94
+msgid "ROBSE ONE CMS"
+msgstr "ROBSE ONE CMS"
+
+#: robse-one-blocks.php:113
+msgid "Choose the standard menus and public custom post types shown to users who are not administrators. Menus added by other plugins are not affected by this setting."
+msgstr "管理者以外のユーザーに表示する標準メニューと、公開カスタム投稿タイプを選びます。プラグインが追加するメニューはこの設定の対象外です。"
+
+#: robse-one-blocks.php:120
+msgid "Enable CMS mode"
+msgstr "CMS モードを有効にする"
+
+#: robse-one-blocks.php:122
+msgid "Menus to show"
+msgstr "表示するメニュー"
+
+#: robse-one-blocks.php:129
+msgid "This profile hides menu links only. It does not change user permissions or prevent layout edits."
+msgstr "この設定はメニューを非表示にするだけです。ユーザー権限の変更やレイアウト編集の防止は行いません。"
+
+#: robse-one-blocks.php:130
+msgid "Administrators are not affected. Only the visibility of standard menus changes; user capabilities stay the same. Menus added by other plugins are controlled by those plugins."
+msgstr "管理者には影響しません。標準メニューの表示だけを切り替え、各ユーザーの権限は変えません。プラグイン独自のメニューは、各プラグインの設定で切り替えてください。"
+
+#: robse-one-blocks.php:172
+msgid "ROBSE ONE editing guide"
+msgstr "ROBSE ONE 編集ガイド"
+
+#: robse-one-blocks.php:186
+msgid "To edit a page or post, change its content and click \"Save\". Images can be added from Media."
+msgstr "ページや投稿を編集するときは、内容を変更して「保存」を押してください。画像は「メディア」から追加できます。"
+
+#: robse-one-blocks.php:189
+msgid "Edit the homepage"
+msgstr "トップページを編集"
+
+#: robse-one-blocks.php:191
+msgid "The homepage is controlled by a site template. Ask your administrator to enable page content mode in Appearance > ROBSE ONE setup, or update the template in the Site Editor."
+msgstr "トップページはサイトのテンプレートで管理されています。管理者に「外観 → ROBSE ONE 導入ガイド」で固定ページ方式に切り替えてもらうか、サイトエディターでテンプレートを更新してください。"
+
+#: robse-one-blocks.php:195
+msgid "Edit pages"
+msgstr "固定ページを編集"
+
+#: robse-one-blocks.php:196
+msgid "Edit posts"
+msgstr "投稿を編集"
+
+#: robse-one-blocks.php:197
+msgid "Manage images and files"
+msgstr "画像・ファイルを管理"
+
+#: robse-one-blocks.php:199
+msgid "What you can edit depends on your account role."
+msgstr "編集できる範囲は、アカウントの権限グループによって異なります。"
+
+#: blocks/contact/index.js:15
+#: blocks/cta/index.js:48
+msgid "Heading"
+msgstr "見出し"
+
+#: blocks/contact/index.js:16
+msgid "Phone number"
+msgstr "電話番号"
+
+#: blocks/contact/index.js:17
+msgid "Email address"
+msgstr "メールアドレス"
+
+#: blocks/contact/index.js:18
+msgid "Enter your real contact details. Empty or invalid links are hidden on the website. Set the HTML anchor to contact if buttons point to #contact."
+msgstr "実際の連絡先を入力してください。空欄や無効なリンクはサイトに表示しません。ボタンのリンク先が #contact の場合は HTML アンカーに contact を設定してください。"
+
+#: blocks/contact/index.js:19
+msgid "The phone link opens a calling app. The email link opens a mail app; it does not send a message automatically."
+msgstr "電話リンクは発信アプリ、メールリンクはメールアプリを開きます。自動で送信する機能ではありません。"
+
+#: blocks/cta/index.js:43
+msgid "Enter a heading"
+msgstr "見出しを入力"
+
+#: blocks/cta/index.js:44
+msgid "Enter a description"
+msgstr "説明文を入力"
+
+#: blocks/cta/index.js:45
+#: blocks/cta/index.js:50
+msgid "Button text"
+msgstr "ボタンの文言"
+
+#: blocks/cta/index.js:45
+msgid "Add a link URL to show the contact button."
+msgstr "リンク先を入力すると問い合わせボタンを表示します。"
+
+#: blocks/cta/index.js:49
+msgid "Description"
+msgstr "説明"
+
+#: blocks/cta/index.js:51
+msgid "Link URL"
+msgstr "リンク URL"
+
+#: blocks/contact/block.json
+msgctxt "block title"
+msgid "ROBSE Contact links"
+msgstr "ROBSE 連絡先リンク"
+
+#: blocks/contact/block.json
+msgctxt "block description"
+msgid "Real phone and email links. No form submission or mail delivery service."
+msgstr "実際の電話・メールのリンクを表示します。フォームの送信やメール配信の機能はありません。"
+
+#: blocks/cta/block.json
+msgctxt "block title"
+msgid "ROBSE CTA"
+msgstr "ROBSE CTA"
+
+#: blocks/cta/block.json
+msgctxt "block description"
+msgid "An editable call-to-action section with a heading, text and a button."
+msgstr "見出し・説明文・ボタンを編集できる CTA セクション。"
+

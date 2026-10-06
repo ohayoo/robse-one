@@ -173,10 +173,10 @@ function robse_one_ai_build_content( $outline ) {
 		);
 		$group = array(
 			'blockName'    => 'core/group',
-			'attrs'        => array( 'className' => 'robse-ai-section', 'layout' => array( 'type' => 'constrained' ) ),
+			'attrs'        => array( 'align' => 'wide', 'className' => 'robse-ai-section', 'style' => array( 'spacing' => array( 'padding' => array( 'top' => '2.5rem', 'bottom' => '2.5rem' ) ) ), 'layout' => array( 'type' => 'constrained' ) ),
 			'innerBlocks'  => $section_blocks,
-			'innerHTML'    => '',
-			'innerContent' => array( null, null ),
+			'innerHTML'    => '<div class="wp-block-group alignwide robse-ai-section" style="padding-top:2.5rem;padding-bottom:2.5rem"></div>',
+			'innerContent' => array( '<div class="wp-block-group alignwide robse-ai-section" style="padding-top:2.5rem;padding-bottom:2.5rem">', null, null, '</div>' ),
 		);
 		$blocks[] = $group;
 	}

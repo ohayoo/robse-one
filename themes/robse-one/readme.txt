@@ -1,10 +1,10 @@
 === ROBSE ONE ===
 Contributors: robsejp
-Tags: block-patterns, custom-logo, editor-style, full-site-editing, one-column, wide-blocks
+Tags: block-patterns, custom-logo, editor-style, full-site-editing, one-column, wide-blocks, style-variations
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.2.3
+Stable tag: 0.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -28,16 +28,25 @@ The theme does not bundle forms, custom post types, or custom blocks.
 ROBSE ONE WordPress Theme, (C) 2026 Robse.
 ROBSE ONE is distributed under the terms of the GNU GPL v2 or later.
 
-This theme bundles no third-party resources (no images, fonts, icons or scripts).
+No third-party images, fonts or scripts are bundled.
+assets/images/studio-shapes.svg is original artwork by Robse, (C) 2026 Robse, licensed GPL-2.0-or-later.
 
 Screenshot
-The screenshot (screenshot.png) is a capture of the theme's own front page created by Robse.
+The screenshot (screenshot.jpg) is a capture of the theme's own front page created by Robse.
 License: GPL-2.0-or-later, https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 == License ==
 This theme is licensed under the GNU General Public License v2 or later.
 
 == Changelog ==
+
+= 0.3.0 =
+* Add an opt-in homepage display mode using the selected page content; preserve classic and custom templates.
+* Add a setup guide, a complete fictional studio starter and Editorial/Midnight style variations.
+* Use palette and radius tokens consistently and improve mobile gutters and hero spacing.
+* Add header logo support, comments and empty-query guidance.
+* Bundle Japanese translations as a fallback while WordPress.org language packs are pending.
+
 
 = 0.2.3 =
 * Make the remaining pattern text (eyebrow labels, phone placeholder and footer credit) translatable.

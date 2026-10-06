@@ -1,10 +1,16 @@
+/* Design tokens also follow Site Editor style variations. */
 :root { --robse-radius: var(--wp--custom--robse--radius, 1.25rem); }
-.robse-section { padding-block: var(--wp--custom--robse--section-space, clamp(3rem, 8vw, 7rem)); }
-.robse-card { height: 100%; padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid #e4ebe8; border-radius: var(--robse-radius); background: #fff; }
-.robse-hero { overflow: hidden; border-radius: 1.5rem; }
-.wp-site-blocks > header, .wp-site-blocks > footer { padding-inline: clamp(1rem, 4vw, 3rem); }
-
+.robse-section, .robse-ai-section { padding-block: var(--wp--custom--robse--section-space, clamp(2.5rem, 6vw, 5rem)); }
+.robse-card { box-sizing: border-box; height: 100%; padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid var(--wp--custom--robse--border-color, #e4ebe8); border-radius: var(--robse-radius); background: var(--wp--preset--color--white, #fff); color: var(--wp--preset--color--ink, #17232d); }
+.robse-hero { overflow: hidden; border-radius: var(--robse-radius); padding: clamp(1.25rem, 4vw, 3rem); }
+.robse-section.has-background { border-radius: var(--robse-radius); }
+.wp-site-blocks > header, .wp-site-blocks > footer, .wp-site-blocks > main { padding-inline: clamp(1rem, 4vw, 3rem); }
+.wp-site-blocks > main > .alignwide { width: 100%; max-width: var(--wp--style--global--wide-size, 1200px); margin-inline: auto; }
+.wp-block-post-content > .alignwide { max-width: var(--wp--style--global--wide-size, 1200px); }
+h1, h2, h3, p, a { overflow-wrap: break-word; }
 .wp-block-button__link, .robse-block-cta__button { transition: background-color .15s ease, color .15s ease; }
 .wp-block-button__link:hover, .robse-block-cta__button:hover { filter: brightness(.92); }
-a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid #176b87; outline-offset: 3px; }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid var(--wp--preset--color--ocean, #176b87); outline-offset: 3px; }
+.robse-home-content .wp-block-post-content { margin-block: 0; }
+@media (max-width: 600px) { .robse-hero { min-height: 0 !important; } .robse-hero .has-large-font-size { font-size: 1.125rem; } .robse-section, .robse-ai-section { padding-block: 2.5rem; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
