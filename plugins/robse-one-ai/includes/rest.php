@@ -75,21 +75,26 @@ function robse_one_ai_generate( WP_REST_Request $request ) {
 	// Write the outline in the site's language (for example ja for Japanese sites).
 	$locale = determine_locale();
 	$input  = 'Create a WordPress landing page outline from the brief below, written in the language of the WordPress locale "' . $locale . '". Return a JSON object only, with keys title (short page title) and sections (3 to 8 objects, each with heading and body; body is plain text, 1 to 3 sentences). Do not include HTML, markdown, URLs, factual claims not in the brief, or personal data not supplied.' . "\n\nBrief:\n" . $brief;
+	$payload = array(
+		'model'             => $model,
+		'input'             => $input,
+		'text'              => array( 'format' => array( 'type' => 'json_object' ) ),
+		'store'             => false,
+		'max_output_tokens' => 4000,
+	);
+	// Reasoning tokens count toward max_output_tokens, so keep reasoning short on reasoning models.
+	if ( preg_match( '/^(gpt-5|o[0-9])/', $model ) && false === strpos( $model, '-chat' ) ) {
+		$payload['reasoning'] = array( 'effort' => 'low' );
+	}
 	$response = wp_remote_post(
 		'https://api.openai.com/v1/responses',
 		array(
-			'timeout' => 45,
+			'timeout' => 60,
 			'headers' => array(
 				'Authorization' => 'Bearer ' . $key,
 				'Content-Type'  => 'application/json',
 			),
-			'body'    => wp_json_encode( array(
-				'model'        => $model,
-				'input'        => $input,
-				'text'         => array( 'format' => array( 'type' => 'json_object' ) ),
-				'store'        => false,
-				'max_output_tokens' => 1400,
-			) ),
+			'body'    => wp_json_encode( $payload ),
 		)
 	);
 	if ( is_wp_error( $response ) ) {
@@ -99,6 +104,9 @@ function robse_one_ai_generate( WP_REST_Request $request ) {
 	$body = json_decode( wp_remote_retrieve_body( $response ), true );
 	if ( $status < 200 || $status >= 300 ) {
 		return new WP_Error( 'robse_one_ai_provider_error', __( 'The AI service returned an error.', 'robse-one-ai' ), array( 'status' => 502, 'provider_status' => $status ) );
+	}
+	if ( isset( $body['status'] ) && 'incomplete' === $body['status'] ) {
+		return new WP_Error( 'robse_one_ai_output_incomplete', __( 'The AI stopped before finishing the outline. Shorten the brief or choose a different model, then try again.', 'robse-one-ai' ), array( 'status' => 502 ) );
 	}
 	$output_text = '';
 	if ( ! empty( $body['output'] ) && is_array( $body['output'] ) ) {
