@@ -52,6 +52,51 @@ function robse_one_corporate_records( $type ) {
 
 require_once __DIR__ . '/starter-profile.php';
 
+function robse_one_starter_page_url( $id ) {
+	return esc_url( add_query_arg( 'page_id', $id, home_url( '/' ) ) );
+}
+
+function robse_one_starter_is_publishable( $page ) {
+	return $page && 'page' === $page->post_type && in_array( $page->post_status, array( 'draft', 'publish' ), true ) &&
+		trim( $page->post_content ) && current_user_can( 'edit_post', $page->ID );
+}
+
+// Replace links only while rendering an authorized preview. Keep the saved
+// blocks intact so all links can be resolved again when the pages go live.
+function robse_one_starter_preview( $content ) {
+	if ( ! is_preview() || ! is_page() || ! in_the_loop() || ! is_main_query() || get_the_ID() !== get_queried_object_id() ) {
+		return $content;
+	}
+	$id = get_the_ID();
+	$marker = get_post_meta( $id, '_robse_one_corporate_page', true );
+	if ( ! $marker || ! current_user_can( 'edit_post', $id ) ) {
+		return $content;
+	}
+	$type = false !== strpos( $marker, ':' ) ? strstr( $marker, ':', true ) : 'corporate';
+	if ( ! isset( robse_one_starter_types()[ $type ] ) ) {
+		return $content;
+	}
+	$records = robse_one_corporate_records( $type );
+	if ( ! in_array( $id, $records, true ) ) {
+		return $content;
+	}
+	$links = array();
+	$items = '';
+	foreach ( $records as $key => $destination ) {
+		if ( ! in_array( get_post_status( $destination ), array( 'draft', 'publish' ), true ) || ! current_user_can( 'edit_post', $destination ) ) {
+			continue;
+		}
+		$url = esc_url( get_preview_post_link( $destination ) );
+		$links[ 'href="{{page:' . $key . '}}"' ] = 'href="' . $url . '"';
+		$label = esc_html( get_the_title( $destination ) );
+		$items .= '<li>' . ( $id === $destination ? '<strong aria-current="page">' . $label . '</strong>' : '<a href="' . $url . '">' . $label . '</a>' ) . '</li>';
+	}
+	return '<nav class="robse-starter-preview" aria-label="下書きの確認"><strong>下書きの確認</strong><ul>' . $items .
+		'</ul><a href="' . esc_url( add_query_arg( 'starter', $type, admin_url( 'themes.php?page=robse-one-setup' ) ) ) .
+		'">導入ガイドへ戻る</a></nav>' . strtr( $content, $links );
+}
+add_filter( 'the_content', 'robse_one_starter_preview', 12 );
+
 function robse_one_corporate_prepare( $type, $profile = array() ) {
 	$data = json_decode( file_get_contents( get_theme_file_path( 'assets/starter/' . $type . '-ja.json' ) ), true );
 	if ( ! is_array( $data ) || array_keys( $data ) !== array( 'home', 'services', 'case', 'company', 'contact' ) ) {
@@ -78,6 +123,7 @@ function robse_one_corporate_prepare( $type, $profile = array() ) {
 			'post_title' => $title,
 			'post_name' => 'robse-' . ( 'corporate' === $type ? '' : $type . '-' ) . $key,
 			'post_content' => $content,
+			'page_template' => 'home' === $key ? 'homepage-content' : 'default',
 			'meta_input' => array(
 				'_robse_one_corporate_page' => robse_one_starter_key( $type, $key ),
 				'_robse_one_corporate_design' => 'corporate' === $type ? 'cover' : $type . '-editorial',
@@ -90,15 +136,15 @@ function robse_one_corporate_prepare( $type, $profile = array() ) {
 	return true;
 }
 
-function robse_one_corporate_launch( $type ) {
+function robse_one_corporate_launch( $type, $set_home = true ) {
 	$records = robse_one_corporate_records( $type );
-	if ( count( $records ) !== 5 || ! robse_one_corporate_can_launch() ) {
+	if ( count( $records ) !== 5 || ( $set_home && ! robse_one_corporate_can_launch() ) ) {
 		return false;
 	}
 	$before = array();
 	foreach ( $records as $id ) {
 		$page = get_post( $id );
-		if ( ! $page || ! in_array( $page->post_status, array( 'draft', 'publish' ), true ) || ! current_user_can( 'edit_post', $id ) || ! trim( $page->post_content ) ) {
+		if ( ! robse_one_starter_is_publishable( $page ) ) {
 			return false;
 		}
 		$before[ $id ] = $page;
@@ -107,7 +153,7 @@ function robse_one_corporate_launch( $type ) {
 	// Resolve starter links by page ID. A changed slug or plain permalinks still work.
 	$links = array();
 	foreach ( $records as $key => $id ) {
-		$links[ '{{page:' . $key . '}}' ] = esc_url( add_query_arg( 'page_id', $id, home_url( '/' ) ) );
+		$links[ '{{page:' . $key . '}}' ] = robse_one_starter_page_url( $id );
 	}
 	$changed = array();
 	$nav = 0;
@@ -115,15 +161,23 @@ function robse_one_corporate_launch( $type ) {
 	$complete = false;
 	try {
 		foreach ( $records as $key => $id ) {
+			$content = strtr( $before[ $id ]->post_content, $links );
+			if ( 'publish' === $before[ $id ]->post_status && $content === $before[ $id ]->post_content ) {
+				continue;
+			}
 			$changed[] = $id;
 			$result = wp_update_post( wp_slash( array(
 				'ID' => $id,
 				'post_status' => 'publish',
-				'post_content' => strtr( $before[ $id ]->post_content, $links ),
+				'post_content' => $content,
 			) ), true );
 			if ( is_wp_error( $result ) || 'publish' !== get_post_status( $id ) ) {
 				return false;
 			}
+		}
+		if ( ! $set_home ) {
+			$complete = true;
+			return true;
 		}
 		$items = '';
 		$menu_records = 'cover' === get_post_meta( $records['home'], '_robse_one_corporate_design', true )
@@ -196,6 +250,7 @@ add_action( 'admin_post_robse_one_corporate', function () {
 				}
 			}
 			if ( 'launch' === $step && ! empty( $_POST['reviewed'] ) && robse_one_corporate_launch( $type ) ) { $status = 'published'; }
+			if ( 'publish_pages' === $step && ! empty( $_POST['reviewed'] ) && robse_one_corporate_launch( $type, false ) ) { $status = 'pages_published'; }
 		} finally {
 			delete_option( 'robse_one_corporate_lock' );
 		}
@@ -211,11 +266,17 @@ function robse_one_render_corporate_setup() {
 	if ( ! isset( $types[ $type ] ) ) { $type = 'corporate'; }
 	$records = robse_one_corporate_records( $type );
 	$active = isset( $records['home'] ) && 'page' === get_option( 'show_on_front' ) && $records['home'] === (int) get_option( 'page_on_front' );
+	$published = count( array_filter( $records, function ( $id ) { return 'publish' === get_post_status( $id ); } ) );
+	$ready = 5 === count( $records ) && ! array_filter( $records, function ( $id ) {
+		return ! robse_one_starter_is_publishable( get_post( $id ) );
+	} );
+	$can_launch = ! $active && $ready && robse_one_corporate_can_launch();
 	$status = isset( $_GET['corporate'] ) ? sanitize_key( wp_unslash( $_GET['corporate'] ) ) : '';
 	$messages = array(
 		'invalid_profile' => '電話番号、メールアドレス、応募先URLの形式を確認してください。',
 		'prepared' => '固定ページを下書きで準備しました。下のリンクから会社情報を編集してください。',
 		'published' => '5ページを公開し、ホームとヘッダーメニューを設定しました。',
+		'pages_published' => '5ページを公開しました。既存のホームとメニューはそのままです。',
 		'busy' => '別のセットアップ処理が実行中です。しばらくしてから開き直してください。',
 		'error' => 'セットアップを完了できませんでした。ページの状態とホーム・ヘッダーの設定を確認してください。',
 	);
@@ -243,6 +304,10 @@ function robse_one_render_corporate_setup() {
 		<?php endif; ?>
 		<?php if ( $records ) : ?>
 			<h3>公開前のページ別チェック</h3>
+			<p>準備済み <?php echo esc_html( count( $records ) ); ?> / 5 ・ 公開済み <?php echo esc_html( $published ); ?> / 5</p>
+			<?php if ( isset( $records['home'] ) && 'draft' === get_post_status( $records['home'] ) && current_user_can( 'edit_post', $records['home'] ) ) : ?>
+				<p><a class="button" href="<?php echo esc_url( get_preview_post_link( $records['home'] ) ); ?>">下書きサイトを確認する</a>　プレビュー内で5ページを移動できます。</p>
+			<?php endif; ?>
 			<p>表示された箇所を編集し、PCとスマホで確認してください。外部リンクの到達、フォーム送信、通知の到着は実際にお試しください。</p>
 			<ol>
 			<?php foreach ( $records as $key => $id ) :
@@ -252,6 +317,7 @@ function robse_one_render_corporate_setup() {
 					<strong><?php echo esc_html( get_the_title( $id ) ); ?></strong>
 					<a href="<?php echo esc_url( get_edit_post_link( $id, 'raw' ) ); ?>"><?php echo esc_html( get_the_title( $id ) ); ?>を編集</a>
 					<a href="<?php echo esc_url( get_preview_post_link( $id ) ); ?>">プレビュー</a>
+					<?php if ( 'publish' === get_post_status( $id ) ) : ?><a href="<?php echo esc_url( get_permalink( $id ) ); ?>">公開ページ</a><?php endif; ?>
 					<?php if ( $issues ) : ?><ul><?php foreach ( $issues as $issue ) : ?><li><?php echo esc_html( $issue ); ?></li><?php endforeach; ?></ul>
 					<?php else : ?><span>確認項目の検出なし</span><?php endif; ?>
 				</li>
@@ -261,17 +327,21 @@ function robse_one_render_corporate_setup() {
 		<?php endif; ?>
 		<?php if ( $active ) : ?>
 			<p><a class="button" href="<?php echo esc_url( home_url( '/' ) ); ?>">サイトを表示</a></p>
-		<?php elseif ( 5 === count( $records ) && robse_one_corporate_can_launch() ) : ?>
+		<?php endif; ?>
+		<?php if ( $ready && ( $can_launch || $published < 5 ) ) : ?>
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 				<?php wp_nonce_field( 'robse_one_corporate' ); ?>
 				<input type="hidden" name="action" value="robse_one_corporate">
 				<input type="hidden" name="starter" value="<?php echo esc_attr( $type ); ?>">
-				<input type="hidden" name="step" value="launch">
+				<p><?php echo esc_html( $can_launch ? '新しいサイトなら、ホームとメニューもまとめて設定できます。' : '現在のホームとメニューを保ったまま、ページを追加できます。公開後、必要なページをナビゲーションに追加してください。' ); ?></p>
 				<p><label><input type="checkbox" name="reviewed" value="1" required> 掲載情報と問い合わせ先を確認しました</label></p>
-				<?php submit_button( '5ページを公開し、ホームとメニューを設定', 'primary', 'submit', false ); ?>
+				<?php if ( $can_launch ) : ?><button class="button button-primary" name="step" value="launch">5ページを公開し、ホームとメニューを設定</button><?php endif; ?>
+				<?php if ( $published < 5 ) : ?><button class="button" name="step" value="publish_pages">ページのみ公開</button><?php endif; ?>
 			</form>
-		<?php elseif ( 5 === count( $records ) ) : ?>
-			<p>現在のホームまたはヘッダーに設定があります。下書きは編集できます。公開する場合は、既存の設定を確認し、ホームとメニューを手動で選んでください。</p>
+		<?php elseif ( ! $active && 5 === $published ) : ?>
+			<p><a class="button" href="<?php echo esc_url( admin_url( 'site-editor.php?path=%2Fnavigation' ) ); ?>">ナビゲーションを開く</a></p>
+		<?php elseif ( 5 === count( $records ) && ! $ready ) : ?>
+			<p>公開するには5ページすべてに本文が必要です。ゴミ箱・非公開・予約中のページがある場合は状態を確認してください。</p>
 		<?php endif; ?>
 	</section>
 	<?php
