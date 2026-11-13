@@ -25,8 +25,14 @@ require_once get_template_directory() . '/inc/getting-started.php';
 require_once get_template_directory() . '/inc/corporate-setup.php';
 
 add_filter( 'body_class', function ( $classes ) {
-	if ( is_page() && 'cover' === get_post_meta( get_queried_object_id(), '_robse_one_corporate_design', true ) ) {
-		$classes[] = 'robse-corporate-cover';
+	if ( is_page() ) {
+		$design = get_post_meta( get_queried_object_id(), '_robse_one_corporate_design', true );
+		if ( 'cover' === $design ) {
+			$classes[] = 'robse-corporate-cover';
+		} elseif ( in_array( $design, array( 'welfare', 'recruit' ), true ) ) {
+			$classes[] = 'robse-industry-starter';
+			$classes[] = 'robse-starter-' . $design;
+		}
 	}
 	return $classes;
 } );

@@ -70,9 +70,10 @@ function robse_one_corporate_prepare( $type ) {
 			'post_title' => $title,
 			'post_name' => 'robse-' . ( 'corporate' === $type ? '' : $type . '-' ) . $key,
 			'post_content' => $content,
-			'meta_input' => 'corporate' === $type
-				? array( '_robse_one_corporate_page' => $key, '_robse_one_corporate_design' => 'cover' )
-				: array( '_robse_one_corporate_page' => robse_one_starter_key( $type, $key ) ),
+			'meta_input' => array(
+				'_robse_one_corporate_page' => robse_one_starter_key( $type, $key ),
+				'_robse_one_corporate_design' => 'corporate' === $type ? 'cover' : $type,
+			),
 		) ), true );
 		if ( is_wp_error( $id ) ) {
 			return false;

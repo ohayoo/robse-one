@@ -112,3 +112,47 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 	border: 2px solid #08a4d2;
 	transform: rotate(45deg);
 }
+
+/* Welfare and recruitment starters use the same editable block structure. */
+.robse-starter-welfare { --starter-bg:#f9f6ee; --starter-paper:#fffdf7; --starter-ink:#222f25; --starter-accent:#30604b; --starter-line:#d9e4d6; }
+.robse-starter-recruit { --starter-bg:#eaf0f5; --starter-paper:#f9fbfd; --starter-ink:#12243b; --starter-accent:#174a78; --starter-line:#cbd8e5; }
+.robse-industry-starter { background:var(--starter-paper); color:var(--starter-ink); }
+.robse-industry-starter .wp-site-blocks>header { background:var(--starter-paper); border-bottom:1px solid var(--starter-line); }
+.robse-industry-starter .wp-block-site-title { letter-spacing:.06em; }
+.robse-industry-starter .wp-site-blocks>main { margin-block-start:0; }
+.robse-industry-starter .robse-home-content,
+.robse-industry-starter .robse-home-content>.wp-block-post-content { max-width:none; width:100%; padding-inline:0; }
+.robse-industry-starter .robse-home-content>.wp-block-post-content>* { max-width:none; margin-block-start:0; }
+.robse-industry-starter .starter-hero {
+	display:grid; grid-template-columns:1fr 1.08fr; align-items:stretch;
+	background:var(--starter-bg); min-height:clamp(400px,42vw,660px);
+}
+.robse-industry-starter .starter-intro { align-self:center; padding:clamp(32px,7vw,105px); }
+.robse-industry-starter .starter-intro>p:first-child { color:var(--starter-accent); font-weight:700; letter-spacing:.12em; }
+.robse-industry-starter .starter-hero h1 { color:var(--starter-ink); font-size:clamp(33px,4.7vw,73px); line-height:1.27; margin:.35em 0; overflow-wrap:anywhere; }
+.robse-industry-starter .starter-hero figure { margin:0; min-width:0; }
+.robse-industry-starter .starter-hero img { display:block; width:100%; height:100%; max-height:700px; object-fit:cover; }
+.robse-starter-recruit .starter-hero { background:#12243b; color:#fff; }
+.robse-starter-recruit .starter-hero h1,
+.robse-starter-recruit .starter-intro>p:first-child { color:#fff; }
+.robse-industry-starter .starter-main { width:min(1160px, calc(100% - 64px)); margin-inline:auto; padding-block:clamp(52px,7vw,108px); }
+.robse-industry-starter .starter-cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+.robse-industry-starter .starter-details { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.robse-industry-starter .starter-card { padding:clamp(20px,3vw,36px); background:var(--starter-paper); border:1px solid var(--starter-line); border-top:4px solid var(--starter-accent); }
+.robse-industry-starter .starter-card h2 { font-size:clamp(21px,2.2vw,31px); color:var(--starter-ink); }
+.robse-industry-starter .starter-card>p:first-child { font-size:.84rem; font-weight:700; color:var(--starter-accent); }
+.robse-industry-starter .starter-call { padding:clamp(35px,7vw,92px); background:var(--starter-bg); text-align:center; }
+.robse-industry-starter .starter-call .wp-block-buttons { justify-content:center; }
+.robse-industry-starter .starter-lead { padding:clamp(24px,4vw,52px); background:var(--starter-bg); }
+.robse-industry-starter .starter-lead p:first-child { font-weight:700; color:var(--starter-accent); }
+.robse-industry-starter .wp-block-button__link { color:#fff; background:var(--starter-accent); }
+.robse-starter-recruit .starter-hero .wp-block-button__link { background:#e4f0fa; color:#12243b; }
+.robse-industry-starter main:not(.robse-home-content) { width:min(1050px,calc(100% - 56px)); margin-inline:auto; }
+.robse-industry-starter main:not(.robse-home-content) h1 { color:var(--starter-ink); font-size:clamp(32px,5vw,64px); }
+.robse-industry-starter a:focus-visible { outline:3px solid var(--starter-accent); outline-offset:4px; }
+@media(max-width:760px) {
+	.robse-industry-starter .starter-hero,.robse-industry-starter .starter-cards { grid-template-columns:1fr; }
+	.robse-industry-starter .starter-hero figure { aspect-ratio: 3 / 2; }
+	.robse-industry-starter .starter-main { width:calc(100% - 40px); }
+	.robse-industry-starter main:not(.robse-home-content) { width:calc(100% - 40px); }
+}
