@@ -2,14 +2,16 @@
 /** Opt-in setup for the Japanese corporate starter. */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-function robse_one_corporate_pages() {
+function robse_one_starter_types() {
 	return array(
-		'home' => 'ホーム',
-		'services' => 'サービス',
-		'case' => '支援事例',
-		'company' => '会社概要',
-		'contact' => 'お問い合わせ',
+		'corporate' => '企業サイト',
+		'welfare' => '福祉事業所',
+		'recruit' => '採用サイト',
 	);
+}
+
+function robse_one_starter_key( $type, $key ) {
+	return 'corporate' === $type ? $key : $type . ':' . $key;
 }
 
 function robse_one_corporate_can_manage() {
@@ -29,14 +31,14 @@ function robse_one_corporate_can_launch() {
 	return true;
 }
 
-function robse_one_corporate_records() {
+function robse_one_corporate_records( $type ) {
 	$records = array();
-	foreach ( robse_one_corporate_pages() as $key => $title ) {
+	foreach ( array( 'home', 'services', 'case', 'company', 'contact' ) as $key ) {
 		$ids = get_posts( array(
 			'post_type' => 'page',
 			'post_status' => array( 'draft', 'pending', 'private', 'publish', 'future', 'trash' ),
 			'meta_key' => '_robse_one_corporate_page',
-			'meta_value' => $key,
+			'meta_value' => robse_one_starter_key( $type, $key ),
 			'numberposts' => 1,
 			'fields' => 'ids',
 			'suppress_filters' => true,
@@ -48,24 +50,24 @@ function robse_one_corporate_records() {
 	return $records;
 }
 
-function robse_one_corporate_prepare() {
-	$data = json_decode( file_get_contents( get_theme_file_path( 'assets/starter/corporate-ja.json' ) ), true );
-	if ( ! is_array( $data ) || array_keys( $data ) !== array_keys( robse_one_corporate_pages() ) ) {
+function robse_one_corporate_prepare( $type ) {
+	$data = json_decode( file_get_contents( get_theme_file_path( 'assets/starter/' . $type . '-ja.json' ) ), true );
+	if ( ! is_array( $data ) || array_keys( $data ) !== array( 'home', 'services', 'case', 'company', 'contact' ) ) {
 		return false;
 	}
-	$records = robse_one_corporate_records();
+	$records = robse_one_corporate_records( $type );
 	foreach ( $data as $key => list( $title, $content ) ) {
 		if ( isset( $records[ $key ] ) ) {
 			continue;
 		}
-		$content = str_replace( '{{workshop}}', esc_url( get_theme_file_uri( 'assets/images/corporate-workshop.webp' ) ), $content );
+		$content = str_replace( '{{workshop}}', esc_url( get_theme_file_uri( 'assets/images/' . $type . '-workshop.webp' ) ), $content );
 		$id = wp_insert_post( wp_slash( array(
 			'post_type' => 'page',
 			'post_status' => 'draft',
 			'post_title' => $title,
-			'post_name' => 'robse-' . $key,
+			'post_name' => 'robse-' . ( 'corporate' === $type ? '' : $type . '-' ) . $key,
 			'post_content' => $content,
-			'meta_input' => array( '_robse_one_corporate_page' => $key ),
+			'meta_input' => array( '_robse_one_corporate_page' => robse_one_starter_key( $type, $key ) ),
 		) ), true );
 		if ( is_wp_error( $id ) ) {
 			return false;
@@ -74,8 +76,8 @@ function robse_one_corporate_prepare() {
 	return true;
 }
 
-function robse_one_corporate_launch() {
-	$records = robse_one_corporate_records();
+function robse_one_corporate_launch( $type ) {
+	$records = robse_one_corporate_records( $type );
 	if ( count( $records ) !== 5 || ! robse_one_corporate_can_launch() ) {
 		return false;
 	}
@@ -119,7 +121,7 @@ function robse_one_corporate_launch() {
 		}
 		$result = wp_insert_post( wp_slash( array(
 			'post_type' => 'wp_navigation', 'post_status' => 'publish',
-			'post_title' => '企業サイトメニュー', 'post_content' => $items,
+			'post_title' => robse_one_starter_types()[ $type ] . 'メニュー', 'post_content' => $items,
 		) ), true );
 		if ( is_wp_error( $result ) ) { return false; }
 		$nav = $result;
@@ -160,24 +162,29 @@ add_action( 'admin_post_robse_one_corporate', function () {
 		wp_die( 'この操作は管理者のみ実行できます。', '', array( 'response' => 403 ) );
 	}
 	check_admin_referer( 'robse_one_corporate' );
+	$type = isset( $_POST['starter'] ) ? sanitize_key( wp_unslash( $_POST['starter'] ) ) : 'corporate';
+	if ( ! isset( robse_one_starter_types()[ $type ] ) ) { wp_die( '用途を選び直してください。', '', array( 'response' => 400 ) ); }
 	$step = isset( $_POST['step'] ) ? sanitize_key( wp_unslash( $_POST['step'] ) ) : '';
 	$status = 'busy';
 	if ( add_option( 'robse_one_corporate_lock', time(), '', false ) ) {
 		try {
 			$status = 'error';
-			if ( 'prepare' === $step && robse_one_corporate_prepare() ) { $status = 'prepared'; }
-			if ( 'launch' === $step && ! empty( $_POST['reviewed'] ) && robse_one_corporate_launch() ) { $status = 'published'; }
+			if ( 'prepare' === $step && robse_one_corporate_prepare( $type ) ) { $status = 'prepared'; }
+			if ( 'launch' === $step && ! empty( $_POST['reviewed'] ) && robse_one_corporate_launch( $type ) ) { $status = 'published'; }
 		} finally {
 			delete_option( 'robse_one_corporate_lock' );
 		}
 	}
-	wp_safe_redirect( add_query_arg( 'corporate', $status, admin_url( 'themes.php?page=robse-one-setup' ) ) );
+	wp_safe_redirect( add_query_arg( array( 'corporate' => $status, 'starter' => $type ), admin_url( 'themes.php?page=robse-one-setup' ) ) );
 	exit;
 } );
 
 function robse_one_render_corporate_setup() {
 	if ( ! robse_one_corporate_can_manage() ) { return; }
-	$records = robse_one_corporate_records();
+	$types = robse_one_starter_types();
+	$type = isset( $_GET['starter'] ) ? sanitize_key( wp_unslash( $_GET['starter'] ) ) : 'corporate';
+	if ( ! isset( $types[ $type ] ) ) { $type = 'corporate'; }
+	$records = robse_one_corporate_records( $type );
 	$active = isset( $records['home'] ) && 'page' === get_option( 'show_on_front' ) && $records['home'] === (int) get_option( 'page_on_front' );
 	$status = isset( $_GET['corporate'] ) ? sanitize_key( wp_unslash( $_GET['corporate'] ) ) : '';
 	$messages = array(
@@ -188,15 +195,20 @@ function robse_one_render_corporate_setup() {
 	);
 	?>
 	<section class="card">
-		<h2>企業サイトをまとめてセットアップ</h2>
+		<h2>用途を選んでサイトをセットアップ</h2>
+		<p><?php foreach ( $types as $key => $label ) : ?>
+			<a class="button <?php echo $key === $type ? 'button-primary' : ''; ?>" href="<?php echo esc_url( add_query_arg( 'starter', $key, admin_url( 'themes.php?page=robse-one-setup' ) ) ); ?>" <?php echo $key === $type ? 'aria-current="page"' : ''; ?>><?php echo esc_html( $label ); ?></a>
+		<?php endforeach; ?></p>
+		<p><a href="<?php echo esc_url( 'https://robse.jp/demo/robse-one-' . $type . '/' ); ?>" target="_blank" rel="noopener">この用途の完成デモを見る（新しいタブ）</a></p>
 		<?php if ( isset( $messages[ $status ] ) ) : ?>
 			<p role="status"><strong><?php echo esc_html( $messages[ $status ] ); ?></strong></p>
 		<?php endif; ?>
-		<p>ホーム・サービス・支援事例・会社概要・お問い合わせの5ページをまとめて準備できます。</p>
+		<p><?php echo esc_html( $types[ $type ] ); ?>用の固定ページをまとめて準備できます。</p>
 		<?php if ( count( $records ) < 5 ) : ?>
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 				<?php wp_nonce_field( 'robse_one_corporate' ); ?>
 				<input type="hidden" name="action" value="robse_one_corporate">
+				<input type="hidden" name="starter" value="<?php echo esc_attr( $type ); ?>">
 				<input type="hidden" name="step" value="prepare">
 				<p>まず下書きを作成します。この操作でホームや公開中のメニューは切り替わりません。</p>
 				<?php submit_button( '5ページを下書きで作成', 'primary', 'submit', false ); ?>
@@ -216,8 +228,9 @@ function robse_one_render_corporate_setup() {
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 				<?php wp_nonce_field( 'robse_one_corporate' ); ?>
 				<input type="hidden" name="action" value="robse_one_corporate">
+				<input type="hidden" name="starter" value="<?php echo esc_attr( $type ); ?>">
 				<input type="hidden" name="step" value="launch">
-				<p><label><input type="checkbox" name="reviewed" value="1" required> 会社情報と問い合わせ先を確認しました</label></p>
+				<p><label><input type="checkbox" name="reviewed" value="1" required> 掲載情報と問い合わせ先を確認しました</label></p>
 				<?php submit_button( '5ページを公開し、ホームとメニューを設定', 'primary', 'submit', false ); ?>
 			</form>
 		<?php elseif ( 5 === count( $records ) ) : ?>
