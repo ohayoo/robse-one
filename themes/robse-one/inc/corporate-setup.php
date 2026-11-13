@@ -60,14 +60,19 @@ function robse_one_corporate_prepare( $type ) {
 		if ( isset( $records[ $key ] ) ) {
 			continue;
 		}
-		$content = str_replace( '{{workshop}}', esc_url( get_theme_file_uri( 'assets/images/' . $type . '-workshop.webp' ) ), $content );
+		$content = strtr( $content, array(
+			'{{workshop}}' => esc_url( get_theme_file_uri( 'assets/images/' . $type . '-workshop.webp' ) ),
+			'{{corporate-hero}}' => esc_url( get_theme_file_uri( 'assets/images/corporate-hero.webp' ) ),
+		) );
 		$id = wp_insert_post( wp_slash( array(
 			'post_type' => 'page',
 			'post_status' => 'draft',
 			'post_title' => $title,
 			'post_name' => 'robse-' . ( 'corporate' === $type ? '' : $type . '-' ) . $key,
 			'post_content' => $content,
-			'meta_input' => array( '_robse_one_corporate_page' => robse_one_starter_key( $type, $key ) ),
+			'meta_input' => 'corporate' === $type
+				? array( '_robse_one_corporate_page' => $key, '_robse_one_corporate_design' => 'cover' )
+				: array( '_robse_one_corporate_page' => robse_one_starter_key( $type, $key ) ),
 		) ), true );
 		if ( is_wp_error( $id ) ) {
 			return false;
@@ -112,7 +117,10 @@ function robse_one_corporate_launch( $type ) {
 			}
 		}
 		$items = '';
-		foreach ( $records as $key => $id ) {
+		$menu_records = 'cover' === get_post_meta( $records['home'], '_robse_one_corporate_design', true )
+			? array( 'company' => $records['company'], 'services' => $records['services'], 'case' => $records['case'], 'contact' => $records['contact'] )
+			: $records;
+		foreach ( $menu_records as $key => $id ) {
 			if ( 'home' === $key ) { continue; }
 			$items .= '<!-- wp:navigation-link ' . serialize_block_attributes( array(
 				'label' => get_the_title( $id ), 'url' => get_permalink( $id ),

@@ -23,3 +23,10 @@ add_action( 'wp_enqueue_scripts', 'robse_one_enqueue_styles' );
 require_once get_template_directory() . '/inc/getting-started.php';
 
 require_once get_template_directory() . '/inc/corporate-setup.php';
+
+add_filter( 'body_class', function ( $classes ) {
+	if ( is_page() && 'cover' === get_post_meta( get_queried_object_id(), '_robse_one_corporate_design', true ) ) {
+		$classes[] = 'robse-corporate-cover';
+	}
+	return $classes;
+} );

@@ -14,3 +14,101 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .robse-home-content .wp-block-post-content { margin-block: 0; }
 @media (max-width: 600px) { .robse-hero { min-height: 0 !important; } .robse-hero .has-large-font-size { font-size: 1.125rem; } .robse-section, .robse-ai-section { padding-block: 2.5rem; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+
+/* Corporate starter. These rules apply only to pages created with this design. */
+.robse-corporate-cover {
+	--corporate-blue: #0083b4;
+	--corporate-line: #e4e9eb;
+	background: #fff;
+	color: #15191c;
+}
+.robse-corporate-cover .wp-site-blocks > header { padding-inline: clamp(16px, 2.2vw, 32px); background: #fff; }
+.robse-corporate-cover .wp-site-blocks > header > .wp-block-group > .wp-block-group { max-width: none; min-height: 48px; }
+.robse-corporate-cover .wp-block-site-title { font-size: clamp(18px, 2vw, 25px); letter-spacing: .08em; }
+.robse-corporate-cover .wp-block-navigation { font-size: 13px; font-weight: 700; }
+.robse-corporate-cover .wp-site-blocks > main { margin-block-start: 0; }
+.robse-corporate-cover .robse-home-content,
+.robse-corporate-cover .robse-home-content > .wp-block-post-content {
+	width: 100%;
+	max-width: none;
+	padding-inline: 0;
+}
+.robse-corporate-cover .robse-home-content > .wp-block-post-content > * {
+	max-width: none;
+	margin-block-start: 0;
+}
+.robse-corporate-cover .shell { width: min(1120px, calc(100% - 64px)); margin-inline: auto; }
+.robse-corporate-cover .hero, .robse-corporate-cover .outlook {
+	position: relative;
+	isolation: isolate;
+	display: grid;
+	align-items: center;
+	color: #fff;
+	background: #102a3d;
+}
+.robse-corporate-cover .hero { min-height: clamp(540px, 44vw, 760px); }
+.robse-corporate-cover .hero-image,
+.robse-corporate-cover .outlook .wp-block-image {
+	position: absolute;
+	inset: 0;
+	z-index: -2;
+	margin: 0;
+}
+.robse-corporate-cover .hero-image img,
+.robse-corporate-cover .outlook img { width: 100%; height: 100%; object-fit: cover; }
+.robse-corporate-cover .hero::after, .robse-corporate-cover .outlook::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background: linear-gradient(90deg, rgba(5,18,35,.76), rgba(6,18,35,.13));
+}
+.robse-corporate-cover .hero-copy { padding: 50px 26px; }
+.robse-corporate-cover .hero h1 { font-size: clamp(42px, 5.4vw, 82px); font-weight: 500; letter-spacing: .075em; line-height: 1.4; margin: 0; }
+.robse-corporate-cover .hero p { margin: 24px 0; }
+.robse-corporate-cover .hero a, .robse-corporate-cover .outlook a, .robse-corporate-cover .contact-band a { color: #fff; }
+.robse-corporate-cover .business, .robse-corporate-cover .topics { padding-block: clamp(68px, 9vw, 130px); }
+.robse-corporate-cover :is(.business,.topics,.outlook,.contact-band) h2 { font-size: 30px; line-height: 1.3; margin: 0 0 36px; color: var(--corporate-blue); }
+.robse-corporate-cover h2 small { font-size: 12px; vertical-align: middle; margin-left: .65em; }
+.robse-corporate-cover .business-grid { display: grid; grid-template-columns: .95fr 1.05fr; gap: 8%; }
+.robse-corporate-cover .statement { font-size: clamp(22px, 3vw, 38px); font-weight: 700; margin: 0 0 24px; line-height: 1.55; }
+.robse-corporate-cover .statement em { color: var(--corporate-blue); font-style: normal; }
+.robse-corporate-cover .lines { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--corporate-line); }
+.robse-corporate-cover .lines li { border-bottom: 1px solid var(--corporate-line); }
+.robse-corporate-cover .lines a { display: flex; align-items: center; gap: 12px; padding: 18px 0; color: inherit; text-decoration: none; }
+.robse-corporate-cover .lines a:hover { color: var(--corporate-blue); }
+.robse-corporate-cover .lines span, .robse-corporate-cover .lines small { font-size: 12px; color: #56636a; }
+.robse-corporate-cover .lines b { margin-left: auto; color: var(--corporate-blue); }
+.robse-corporate-cover .outlook { min-height: clamp(310px, 37vw, 570px); text-align: center; padding: 40px 24px; }
+.robse-corporate-cover .outlook::after { background: rgba(7,28,40,.64); }
+.robse-corporate-cover :is(.outlook,.contact-band) h2 { color: #fff; margin-bottom: 22px; }
+.robse-corporate-cover :is(.outlook,.contact-band) p:not(.more) { font-size: clamp(25px, 4vw, 49px); font-weight: 700; line-height: 1.5; margin: 0 0 20px; }
+.robse-corporate-cover .more { font-size: 13px; font-weight: 700; }
+.robse-corporate-cover .contact-band { background: linear-gradient(118deg,#006591,#0078a0 63%,#0087a9); color: #fff; padding-block: clamp(62px, 9vw, 126px); }
+.robse-corporate-cover .quick { background: #f3f6f7; padding: 56px 0; }
+.robse-corporate-cover .quick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.robse-corporate-cover .quick-grid p { margin: 0; }
+.robse-corporate-cover .quick-grid a { display: grid; place-content: center; min-height: 140px; background: #163a50; color: #fff; font-weight: 700; text-align: center; text-decoration: none; font-size: 24px; }
+.robse-corporate-cover .quick-grid p:nth-child(2) a { background: #13536b; }
+.robse-corporate-cover .quick-grid p:nth-child(3) a { background: #00698a; }
+.robse-corporate-cover .page-label { color: var(--corporate-blue); font-size: 24px; font-weight: 700; }
+.robse-corporate-cover main:not(.robse-home-content) { width: min(900px, calc(100% - 64px)); margin-inline: auto; }
+.robse-corporate-cover main:not(.robse-home-content) h1 { font-size: clamp(34px, 6vw, 68px); }
+@media (max-width: 720px) {
+	.robse-corporate-cover .shell, .robse-corporate-cover main:not(.robse-home-content) { width: calc(100% - 40px); }
+	.robse-corporate-cover .hero-copy { padding: 24px 0; }
+	.robse-corporate-cover .hero-image img { object-position: 58% center; }
+	.robse-corporate-cover .business-grid, .robse-corporate-cover .quick-grid { grid-template-columns: 1fr; gap: 25px; }
+	.robse-corporate-cover .lines a { flex-wrap: wrap; gap: 7px 10px; }
+	.robse-corporate-cover .quick-grid a { min-height: 95px; }
+}
+.robse-corporate-cover .hero h1 { color: #fff; }
+.robse-corporate-cover .wp-site-blocks > header .wp-block-site-title a::before {
+	content: "";
+	display: inline-block;
+	width: .52em;
+	height: .52em;
+	margin-inline: .18em .55em;
+	border: 2px solid #08a4d2;
+	transform: rotate(45deg);
+}

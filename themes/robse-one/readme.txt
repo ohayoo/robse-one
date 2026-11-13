@@ -4,7 +4,7 @@ Tags: block-patterns, custom-logo, editor-style, full-site-editing, one-column, 
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.6.0
+Stable tag: 0.7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ assets/images/welfare-workshop.webp and assets/images/recruit-workshop.webp are 
 
 
 == Changelog ==
+= 0.7.0 =
+* Add the new corporate demo design to the five-page setup. Existing pages are preserved.
+
 = 0.6.0 =
 * Add a setup guide extension for contact and application forms.
 
