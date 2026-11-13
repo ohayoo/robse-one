@@ -61,7 +61,7 @@ function robse_one_corporate_prepare( $type ) {
 			continue;
 		}
 		$content = strtr( $content, array(
-			'{{workshop}}' => esc_url( get_theme_file_uri( 'assets/images/' . $type . '-workshop.webp' ) ),
+			'{{workshop}}' => esc_url( get_theme_file_uri( 'assets/images/' . ( 'corporate' === $type ? 'corporate-workshop.webp' : $type . '-editorial.webp' ) ) ),
 			'{{corporate-hero}}' => esc_url( get_theme_file_uri( 'assets/images/corporate-hero.webp' ) ),
 		) );
 		$id = wp_insert_post( wp_slash( array(
@@ -72,7 +72,7 @@ function robse_one_corporate_prepare( $type ) {
 			'post_content' => $content,
 			'meta_input' => array(
 				'_robse_one_corporate_page' => robse_one_starter_key( $type, $key ),
-				'_robse_one_corporate_design' => 'corporate' === $type ? 'cover' : $type,
+				'_robse_one_corporate_design' => 'corporate' === $type ? 'cover' : $type . '-editorial',
 			),
 		) ), true );
 		if ( is_wp_error( $id ) ) {

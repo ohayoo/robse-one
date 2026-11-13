@@ -29,6 +29,9 @@ add_filter( 'body_class', function ( $classes ) {
 		$design = get_post_meta( get_queried_object_id(), '_robse_one_corporate_design', true );
 		if ( 'cover' === $design ) {
 			$classes[] = 'robse-corporate-cover';
+		} elseif ( in_array( $design, array( 'welfare-editorial', 'recruit-editorial' ), true ) ) {
+			$classes[] = 'robse-editorial-starter';
+			$classes[] = 'robse-' . $design;
 		} elseif ( in_array( $design, array( 'welfare', 'recruit' ), true ) ) {
 			$classes[] = 'robse-industry-starter';
 			$classes[] = 'robse-starter-' . $design;
