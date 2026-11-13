@@ -50,7 +50,9 @@ function robse_one_corporate_records( $type ) {
 	return $records;
 }
 
-function robse_one_corporate_prepare( $type ) {
+require_once __DIR__ . '/starter-profile.php';
+
+function robse_one_corporate_prepare( $type, $profile = array() ) {
 	$data = json_decode( file_get_contents( get_theme_file_path( 'assets/starter/' . $type . '-ja.json' ) ), true );
 	if ( ! is_array( $data ) || array_keys( $data ) !== array( 'home', 'services', 'case', 'company', 'contact' ) ) {
 		return false;
@@ -64,6 +66,7 @@ function robse_one_corporate_prepare( $type ) {
 			'{{workshop}}' => esc_url( get_theme_file_uri( 'assets/images/' . ( 'corporate' === $type ? 'corporate-workshop.webp' : $type . '-editorial.webp' ) ) ),
 			'{{corporate-hero}}' => esc_url( get_theme_file_uri( 'assets/images/corporate-hero.webp' ) ),
 		) );
+		$content = robse_one_starter_profile_content( $type, $key, $content, $profile );
 		$id = wp_insert_post( wp_slash( array(
 			'post_type' => 'page',
 			'post_status' => 'draft',
@@ -178,7 +181,15 @@ add_action( 'admin_post_robse_one_corporate', function () {
 	if ( add_option( 'robse_one_corporate_lock', time(), '', false ) ) {
 		try {
 			$status = 'error';
-			if ( 'prepare' === $step && robse_one_corporate_prepare( $type ) ) { $status = 'prepared'; }
+			if ( 'prepare' === $step ) {
+				$profile = robse_one_starter_profile_input( $type, wp_unslash( $_POST['profile'] ?? array() ) );
+				if ( false === $profile ) {
+					$status = 'invalid_profile';
+				} else {
+					update_option( 'robse_one_starter_profile_' . $type, $profile, false );
+					if ( robse_one_corporate_prepare( $type, $profile ) ) { $status = 'prepared'; }
+				}
+			}
 			if ( 'launch' === $step && ! empty( $_POST['reviewed'] ) && robse_one_corporate_launch( $type ) ) { $status = 'published'; }
 		} finally {
 			delete_option( 'robse_one_corporate_lock' );
@@ -197,6 +208,7 @@ function robse_one_render_corporate_setup() {
 	$active = isset( $records['home'] ) && 'page' === get_option( 'show_on_front' ) && $records['home'] === (int) get_option( 'page_on_front' );
 	$status = isset( $_GET['corporate'] ) ? sanitize_key( wp_unslash( $_GET['corporate'] ) ) : '';
 	$messages = array(
+		'invalid_profile' => '電話番号、メールアドレス、応募先URLの形式を確認してください。',
 		'prepared' => '固定ページを下書きで準備しました。下のリンクから会社情報を編集してください。',
 		'published' => '5ページを公開し、ホームとヘッダーメニューを設定しました。',
 		'busy' => '別のセットアップ処理が実行中です。しばらくしてから開き直してください。',
@@ -220,13 +232,24 @@ function robse_one_render_corporate_setup() {
 				<input type="hidden" name="starter" value="<?php echo esc_attr( $type ); ?>">
 				<input type="hidden" name="step" value="prepare">
 				<p>まず下書きを作成します。この操作でホームや公開中のメニューは切り替わりません。</p>
+				<?php robse_one_starter_render_profile( $type ); ?>
 				<?php submit_button( '5ページを下書きで作成', 'primary', 'submit', false ); ?>
 			</form>
 		<?php endif; ?>
 		<?php if ( $records ) : ?>
+			<h3>公開前のページ別チェック</h3>
+			<p>表示された箇所を編集し、PCとスマホで確認してください。外部リンクの到達、フォーム送信、通知の到着は実際にお試しください。</p>
 			<ol>
-			<?php foreach ( $records as $id ) : ?>
-				<li><a href="<?php echo esc_url( get_edit_post_link( $id, 'raw' ) ); ?>"><?php echo esc_html( get_the_title( $id ) ); ?>を編集</a></li>
+			<?php foreach ( $records as $key => $id ) :
+				$issues = robse_one_starter_page_checks( $type, $key, get_post( $id ), $records );
+				?>
+				<li>
+					<strong><?php echo esc_html( get_the_title( $id ) ); ?></strong>
+					<a href="<?php echo esc_url( get_edit_post_link( $id, 'raw' ) ); ?>"><?php echo esc_html( get_the_title( $id ) ); ?>を編集</a>
+					<a href="<?php echo esc_url( get_preview_post_link( $id ) ); ?>">プレビュー</a>
+					<?php if ( $issues ) : ?><ul><?php foreach ( $issues as $issue ) : ?><li><?php echo esc_html( $issue ); ?></li><?php endforeach; ?></ul>
+					<?php else : ?><span>確認項目の検出なし</span><?php endif; ?>
+				</li>
 			<?php endforeach; ?>
 			</ol>
 			<p>サイト名は「設定 → 一般」で変更できます。見本の原稿・写真を確認し、お問い合わせページには実際の電話・メール・フォームを設定してください。</p>
