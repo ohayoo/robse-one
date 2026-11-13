@@ -4,7 +4,7 @@ Tags: block-patterns, custom-logo, editor-style, full-site-editing, one-column, 
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.11.0
+Stable tag: 0.12.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -41,10 +41,15 @@ This theme is licensed under the GNU General Public License v2 or later.
 assets/images/corporate-workshop.webp is an AI-generated demonstration photo supplied by Robse under GPL-2.0-or-later.
 assets/images/welfare-workshop.webp and assets/images/recruit-workshop.webp are AI-generated demonstration photos supplied by Robse under GPL-2.0-or-later.
 assets/images/welfare-editorial.webp and assets/images/recruit-editorial.webp are AI-generated demonstration photos supplied by Robse under GPL-2.0-or-later.
+assets/images/welfare-facility.webp and assets/images/recruit-training.webp are AI-generated demonstration photos supplied by Robse under GPL-2.0-or-later.
+
 
 
 
 == Changelog ==
+= 0.12.0 =
+* Redesign the welfare and recruitment information and contact pages.
+
 = 0.11.0 =
 * Expand the welfare intake process and recruitment job details pages.
 

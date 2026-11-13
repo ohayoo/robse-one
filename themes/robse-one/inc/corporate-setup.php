@@ -64,6 +64,8 @@ function robse_one_corporate_prepare( $type, $profile = array() ) {
 		}
 		$content = strtr( $content, array(
 			'{{workshop}}' => esc_url( get_theme_file_uri( 'assets/images/' . ( 'corporate' === $type ? 'corporate-workshop.webp' : $type . '-editorial.webp' ) ) ),
+			'{{facility-photo}}' => esc_url( get_theme_file_uri( 'assets/images/welfare-facility.webp' ) ),
+			'{{training-photo}}' => esc_url( get_theme_file_uri( 'assets/images/recruit-training.webp' ) ),
 			'{{corporate-hero}}' => esc_url( get_theme_file_uri( 'assets/images/corporate-hero.webp' ) ),
 		) );
 		$content = robse_one_starter_profile_content( $type, $key, $content, $profile );

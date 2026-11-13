@@ -315,3 +315,28 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 	.robse-welfare-editorial .starter-process-step { grid-template-columns:42px minmax(0,1fr); gap:8px 12px; }
 	.robse-welfare-editorial .starter-process-step > p:last-child { grid-column:2; }
 }
+
+.robse-editorial-starter .detail-opening,
+.robse-editorial-starter .detail-contact {
+	display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);
+	gap:clamp(18px,4vw,56px); align-items:center;
+	margin-block:0 48px; padding:clamp(22px,4vw,52px); background:#edf1e7;
+}
+.robse-recruit-editorial .detail-opening,.robse-recruit-editorial .detail-contact { background:#152a42; color:#fff; }
+.robse-editorial-starter .detail-copy h2 { font-size:clamp(25px,3.5vw,48px); line-height:1.3; margin:0; }
+.robse-recruit-editorial .detail-copy h2 { color:#fff; }
+.robse-editorial-starter .detail-opening figure { margin:0; aspect-ratio:1.48; overflow:hidden; }
+.robse-editorial-starter .detail-opening img { display:block;width:100%;height:100%;object-fit:cover; }
+.robse-welfare-editorial .detail-opening figure { border-radius:50% 50% 9px 9px; }
+.robse-editorial-starter .detail-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,235px),1fr));gap:14px; }
+.robse-editorial-starter .detail-card { background:#fff; color:var(--editorial-ink); border-top:3px solid var(--editorial-accent); padding:clamp(17px,2.8vw,32px); }
+.robse-editorial-starter .detail-card :is(h2,h3) { color:var(--editorial-ink);margin:0;font-size:clamp(19px,2.2vw,27px); }
+.robse-editorial-starter .detail-sequence { margin-block:48px; }
+.robse-editorial-starter .detail-sequence .detail-card>p:first-child { color:var(--editorial-accent);font-weight:750;margin-top:0; }
+.robse-editorial-starter .detail-facts td { padding:10px;border-color:var(--editorial-line); }
+.robse-editorial-starter .detail-facts td:first-child { width:35%;font-weight:700; }
+.robse-editorial-starter .detail-band { margin-block-start:46px; padding:clamp(24px,5vw,62px); }
+.robse-editorial-starter .detail-secondary { margin-block:30px; }
+@media(max-width:720px) {
+	.robse-editorial-starter .detail-opening,.robse-editorial-starter .detail-contact { grid-template-columns:1fr; }
+}
