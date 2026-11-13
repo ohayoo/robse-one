@@ -372,3 +372,23 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 	.robse-corporate-cover main:has(.corp-masthead, .corp-contact-top) { width:calc(100% - 40px); }
 	.robse-corporate-cover .corp-masthead,.robse-corporate-cover .corp-contact-top { grid-template-columns:1fr; }
 }
+.robse-starter-preview {
+	box-sizing: border-box;
+	margin: 1.25rem auto;
+	padding: 1rem;
+	width: min(100%, 56rem);
+	border: 1px solid #c5ccd7;
+	border-radius: .5rem;
+	background: #f0f4fb;
+	color: #1b263b;
+	font-size: .9rem;
+}
+.robse-starter-preview ul {
+	display: flex;
+	flex-wrap: wrap;
+	gap: .5rem 1.25rem;
+	margin: .5rem 0;
+	padding: 0;
+	list-style: none;
+}
+.robse-starter-preview a { color: #18457a; text-decoration: underline; }

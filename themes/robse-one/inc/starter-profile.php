@@ -17,11 +17,13 @@ function robse_one_starter_profile_fields( $type ) {
 }
 
 function robse_one_starter_profile_input( $type, $input ) {
+	if ( ! is_array( $input ) ) { return false; }
 	$profile = array();
 	foreach ( robse_one_starter_profile_fields( $type ) as $key => $label ) {
 		$value = isset( $input[ $key ] ) && is_string( $input[ $key ] ) ? sanitize_text_field( $input[ $key ] ) : '';
 		if ( 'email' === $key && $value && ! is_email( $value ) ) { return false; }
-		if ( 'phone' === $key && $value && ! preg_match( '/^\+?[0-9][0-9 ()-]{5,24}$/D', $value ) ) { return false; }
+		if ( 'phone' === $key && $value && ( ! preg_match( '/^\+?[0-9][0-9 ()-]{5,24}$/D', $value ) ||
+			! preg_match( '/^[0-9]{6,15}$/D', preg_replace( '/[^0-9]/', '', $value ) ) ) ) { return false; }
 		if ( 'apply' === $key && $value ) {
 			$value = esc_url_raw( $value, array( 'http', 'https' ) );
 			if ( ! wp_parse_url( $value, PHP_URL_HOST ) ) { return false; }
@@ -47,11 +49,28 @@ function robse_one_starter_profile_content( $type, $key, $content, $profile ) {
 		$content = strtr( $content, array( '製造・組み立て担当（見本）' => $role, '製造・組み立て担当' => $role ) );
 		unset( $profile['role'] );
 	}
+	if ( 'company' === $key && in_array( $type, array( 'corporate', 'welfare' ), true ) ) {
+		$labels = 'corporate' === $type ? array( '所在地・受付時間' ) : array( '運営法人・所在地', '開所時間・アクセス' );
+		$rows = '';
+		foreach ( array( 'address', 'hours' ) as $field ) {
+			$rows .= '<tr><td>' . esc_html( robse_one_starter_profile_fields( $type )[ $field ] ) .
+				'</td><td>' . ( empty( $profile[ $field ] ) ? '公開前に入力' : esc_html( $profile[ $field ] ) ) . '</td></tr>';
+		}
+		$original = '';
+		foreach ( $labels as $label ) {
+			$original .= '<tr><td>' . $label . '</td><td>公開前に入力</td></tr>';
+		}
+		if ( false !== strpos( $content, $original ) ) {
+			$content = str_replace( $original, $rows, $content );
+			unset( $profile['address'], $profile['hours'] );
+		}
+	}
 	$targets = array(
 		'company' => array( 'address', 'hours' ),
 		'case' => 'recruit' === $type ? array( 'role' ) : array(),
 		'contact' => array( 'phone', 'email', 'visit', 'apply' ),
 	);
+	$details = array();
 	foreach ( $targets[ $key ] ?? array() as $field ) {
 		if ( empty( $profile[ $field ] ) ) { continue; }
 		$value = esc_html( $profile[ $field ] );
@@ -64,9 +83,20 @@ function robse_one_starter_profile_content( $type, $key, $content, $profile ) {
 			$value = '<a href="' . esc_url( $urls[ $field ] ) . '">' . ( 'apply' === $field ? '応募フォームを開く' : $value ) . '</a>';
 		}
 		$label = robse_one_starter_profile_fields( $type )[ $field ];
-		$content .= "\n<!-- wp:paragraph --><p>" . esc_html( $label ) . '　' . $value . '</p><!-- /wp:paragraph -->';
+		$details[ $field ] = "<!-- wp:paragraph -->\n<p>" . esc_html( $label ) . '　' . $value . "</p>\n<!-- /wp:paragraph -->";
 	}
-	return $content;
+	if ( 'contact' === $key && array_intersect( array( 'phone', 'email', 'apply' ), array_keys( $details ) ) ) {
+		$prompts = array(
+			'corporate' => 'ここに実際の電話番号、メールリンク、またはフォームを設定してください。',
+			'welfare' => '公開前に事業所の電話番号、メールリンク、または問い合わせフォームを設定してください。',
+			'recruit' => '公開前に採用担当のメールリンク、電話番号、または応募フォームを設定してください。',
+		);
+		$prompt = "<!-- wp:paragraph -->\n<p>" . $prompts[ $type ] . "</p>\n<!-- /wp:paragraph -->";
+		if ( false !== strpos( $content, $prompt ) ) {
+			return str_replace( $prompt, implode( "\n", $details ), $content );
+		}
+	}
+	return $content . ( $details ? "\n" . implode( "\n", $details ) : '' );
 }
 
 function robse_one_starter_page_checks( $type, $key, $page, $records ) {
