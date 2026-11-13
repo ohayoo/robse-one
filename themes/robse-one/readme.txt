@@ -4,7 +4,7 @@ Tags: block-patterns, custom-logo, editor-style, full-site-editing, one-column, 
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.10.0
+Stable tag: 0.11.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -45,6 +45,9 @@ assets/images/welfare-editorial.webp and assets/images/recruit-editorial.webp ar
 
 
 == Changelog ==
+= 0.11.0 =
+* Expand the welfare intake process and recruitment job details pages.
+
 = 0.10.0 =
 * Add business details and page-by-page checks to the starter setup guide.
 

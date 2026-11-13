@@ -10,10 +10,8 @@ function robse_one_ai_review_page( $id ) {
 function robse_one_ai_review_blocks( $blocks ) {
 	$lines = array();
 	foreach ( $blocks as $block ) {
-		if ( in_array( $block['blockName'], array( 'core/heading', 'core/paragraph' ), true ) ) {
-			$text = trim( html_entity_decode( wp_strip_all_tags( preg_replace( '~<br\s*/?>~i', ' ', $block['innerHTML'] ) ), ENT_QUOTES, 'UTF-8' ) );
-			if ( '' !== $text ) { $lines[] = $text; }
-		}
+		$text = robse_one_ai_review_text( $block );
+		if ( '' !== $text ) { $lines[] = $text; }
 		$lines = array_merge( $lines, robse_one_ai_review_blocks( $block['innerBlocks'] ) );
 	}
 	return $lines;
@@ -30,7 +28,9 @@ function robse_one_ai_render_review() {
 	$lines = $page ? robse_one_ai_review_blocks( parse_blocks( $page->post_content ) ) : array();
 	$hash = $page ? hash( 'sha256', $page->post_content ) : '';
 	$changes = array();
-	$error = '';
+	$draft_status = sanitize_key( wp_unslash( $_GET['draft_status'] ?? '' ) );
+	$error = 'expired' === $draft_status ? '修正案の期限切れ、または元ページの変更を検出しました。修正案を作り直してください。' :
+		( 'failed' === $draft_status ? '採用する項目を選んでから、もう一度お試しください。' : '' );
 	if ( 'POST' === $_SERVER['REQUEST_METHOD'] ) {
 		check_admin_referer( 'robse_one_ai_review' );
 		$selected = array();
@@ -84,7 +84,7 @@ function robse_one_ai_render_review() {
 	?>
 	<div class="wrap">
 	<h1>既存ページの修正案</h1>
-	<p>公開済みのページから文章を選び、GPTの提案と原文を比較できます。反映する場合は固定ページを開き、採用する文章を編集してください。</p>
+	<p>公開済みのページから文章を選び、GPTの提案と原文を比較できます。採用する項目を選ぶと、確認用の下書きを別に作成できます。</p>
 	<?php if ( $error ) : ?><p role="alert"><?php echo esc_html( $error ); ?></p><?php endif; ?>
 	<form method="get">
 		<input type="hidden" name="page" value="robse-one-ai-review">
@@ -125,13 +125,26 @@ function robse_one_ai_render_review() {
 		</form>
 	</details>
 	<?php endif; ?>
-	<?php if ( $changes ) : ?>
+	<?php if ( $changes ) :
+		$index = 0;
+		$draftable = robse_one_ai_review_draftable( parse_blocks( $page->post_content ), $index );
+		$token = wp_generate_uuid4();
+		set_transient( 'robse_ai_review_' . get_current_user_id() . '_' . $token, array(
+			'id'=>$id, 'hash'=>$hash, 'changes'=>array_intersect_key( $changes, $draftable ),
+		), 30 * MINUTE_IN_SECONDS );
+		?>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+		<?php wp_nonce_field( 'robse_one_ai_review_draft' ); ?>
+		<input type="hidden" name="action" value="robse_one_ai_review_draft">
+		<input type="hidden" name="proposal_token" value="<?php echo esc_attr( $token ); ?>">
 		<h2>修正前と修正案</h2>
-		<table class="widefat striped"><thead><tr><th scope="col">修正前</th><th scope="col">修正案</th></tr></thead><tbody>
+		<table class="widefat striped"><thead><tr><th scope="col">採用</th><th scope="col">修正前</th><th scope="col">修正案</th></tr></thead><tbody>
 		<?php foreach ( $changes as $index => $replacement ) : ?>
-			<tr><td><?php echo esc_html( $lines[ $index ] ); ?></td><td><?php echo esc_html( $replacement ); ?></td></tr>
+			<tr><td><?php if ( isset( $draftable[ $index ] ) ) : ?><input type="checkbox" name="adopt[]" aria-label="<?php echo esc_attr( '項目 ' . ( $index + 1 ) . ' を採用' ); ?>" value="<?php echo esc_attr( $index ); ?>"><?php else : ?>装飾やリンク付きのため手動編集<?php endif; ?></td><td><?php echo esc_html( $lines[ $index ] ); ?></td><td><?php echo esc_html( $replacement ); ?></td></tr>
 		<?php endforeach; ?>
 		</tbody></table>
+		<?php if ( array_intersect_key( $changes, $draftable ) ) : ?><p><button class="button button-primary">選んだ修正を確認用の下書きに反映</button></p><?php endif; ?>
+		</form>
 		<p><a class="button" href="<?php echo esc_url( get_edit_post_link( $id, 'raw' ) ); ?>">元の固定ページを編集する</a></p>
 	<?php endif; ?>
 	</div>

@@ -302,3 +302,16 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 	font-size: clamp(29px, 3.8vw, 60px);
 	letter-spacing: -.04em;
 }
+
+.robse-welfare-editorial .starter-process { margin-block: 40px; }
+.robse-welfare-editorial .starter-process-step { display:grid; grid-template-columns:64px minmax(0,.85fr) minmax(0,1.5fr); gap:20px; align-items:start; border-top:1px solid var(--editorial-line); padding:24px 0; }
+.robse-welfare-editorial .starter-process-step > * { margin:0; }
+.robse-welfare-editorial .starter-process-step > p:first-child { color:var(--editorial-accent); font-size:1.45rem; font-weight:700; }
+.robse-editorial-starter .starter-info { margin-block:32px; padding:clamp(20px,4vw,40px); border:1px solid var(--editorial-line); }
+.robse-recruit-editorial .starter-info .wp-block-table { margin:16px 0 0; }
+.robse-recruit-editorial .starter-info td { padding:12px; border:0; border-bottom:1px solid var(--editorial-line); overflow-wrap:anywhere; }
+.robse-recruit-editorial .starter-info td:first-child { width:34%; font-weight:700; background:#e4edf6; }
+@media(max-width:640px) {
+	.robse-welfare-editorial .starter-process-step { grid-template-columns:42px minmax(0,1fr); gap:8px 12px; }
+	.robse-welfare-editorial .starter-process-step > p:last-child { grid-column:2; }
+}

@@ -4,7 +4,7 @@ Tags: ai, openai, page builder, draft, content
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.4.0
+Stable tag: 0.5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -57,6 +57,9 @@ No. The plugin only creates page drafts, and only after an explicit save action.
 Its settings and the stored API key are removed. Draft pages created by the plugin remain on the site.
 
 == Changelog ==
+= 0.5.0 =
+* Save selected GPT or imported suggestions to a separate review draft.
+
 = 0.4.0 =
 * Compare suggested edits to selected text on an existing page, using GPT or imported JSON.
 

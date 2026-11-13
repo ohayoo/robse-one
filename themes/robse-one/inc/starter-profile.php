@@ -42,6 +42,11 @@ function robse_one_starter_profile_content( $type, $key, $content, $profile ) {
 	if ( 'welfare' === $type && ! empty( $profile['service'] ) ) {
 		$content = str_replace( '就労継続支援B型', esc_html( $profile['service'] ), $content );
 	}
+	if ( 'recruit' === $type && 'case' === $key && ! empty( $profile['role'] ) ) {
+		$role = esc_html( $profile['role'] );
+		$content = strtr( $content, array( '製造・組み立て担当（見本）' => $role, '製造・組み立て担当' => $role ) );
+		unset( $profile['role'] );
+	}
 	$targets = array(
 		'company' => array( 'address', 'hours' ),
 		'case' => 'recruit' === $type ? array( 'role' ) : array(),
