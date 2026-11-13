@@ -3,7 +3,7 @@ Contributors: robsejp
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.3.0
+Stable tag: 0.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -26,6 +26,9 @@ Contact links open a calling or email app. This plugin does not send forms or de
 Deleting the plugin removes its CMS menu settings. Existing posts and pages are preserved.
 
 == Changelog ==
+= 0.4.0 =
+* Add Contact Form 7 setup and a notification receipt check to the theme setup guide.
+
 = 0.3.0 =
 * Add contact links with validated tel and mailto destinations.
 * Link the client dashboard to the selected homepage in page content mode.

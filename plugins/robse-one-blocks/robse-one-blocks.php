@@ -2,7 +2,7 @@
 /**
  * Plugin Name: ROBSE ONE Blocks
  * Description: A CTA block, a menu profile for non-administrators and a dashboard editing guide for ROBSE ONE sites.
- * Version: 0.3.0
+ * Version: 0.4.0
  * Requires at least: 6.6
  * Requires PHP: 7.4
  * License: GPL-2.0-or-later
@@ -199,3 +199,5 @@ function robse_one_blocks_render_dashboard_guide() {
 	<p><small><?php esc_html_e( 'What you can edit depends on your account role.', 'robse-one-blocks' ); ?></small></p>
 	<?php
 }
+
+require_once __DIR__ . '/forms.php';

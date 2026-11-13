@@ -70,11 +70,18 @@ function robse_one_ai_generate( WP_REST_Request $request ) {
 	}
 	set_transient( $rate_key, 1, 15 );
 
-	$options = get_option( 'robse_one_ai_settings', array() );
-	$model = ! empty( $options['model'] ) ? sanitize_text_field( $options['model'] ) : 'gpt-5';
 	// Write the outline in the site's language (for example ja for Japanese sites).
 	$locale = determine_locale();
 	$input  = 'Create a WordPress landing page outline from the brief below, written in the language of the WordPress locale "' . $locale . '". Return a JSON object only, with keys title (short page title) and sections (3 to 8 objects, each with heading and body; body is plain text, 1 to 3 sentences). Do not include HTML, markdown, URLs, factual claims not in the brief, or personal data not supplied.' . "\n\nBrief:\n" . $brief;
+	$data = robse_one_ai_request_json( $input, $key );
+	if ( is_wp_error( $data ) ) { return $data; }
+	$outline = robse_one_ai_sanitize_outline( $data );
+	return is_wp_error( $outline ) ? $outline : rest_ensure_response( $outline );
+}
+
+function robse_one_ai_request_json( $input, $key ) {
+	$options = get_option( 'robse_one_ai_settings', array() );
+	$model = ! empty( $options['model'] ) ? sanitize_text_field( $options['model'] ) : 'gpt-5';
 	$payload = array(
 		'model'             => $model,
 		'input'             => $input,
@@ -121,12 +128,7 @@ function robse_one_ai_generate( WP_REST_Request $request ) {
 			}
 		}
 	}
-	$data = json_decode( $output_text, true );
-	$outline = robse_one_ai_sanitize_outline( $data );
-	if ( is_wp_error( $outline ) ) {
-		return $outline;
-	}
-	return rest_ensure_response( $outline );
+	return json_decode( $output_text, true );
 }
 
 function robse_one_ai_sanitize_outline( $data, $error_status = 502 ) {
