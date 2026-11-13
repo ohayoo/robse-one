@@ -21,3 +21,5 @@ function robse_one_enqueue_styles() {
 add_action( 'wp_enqueue_scripts', 'robse_one_enqueue_styles' );
 
 require_once get_template_directory() . '/inc/getting-started.php';
+
+require_once get_template_directory() . '/inc/corporate-setup.php';

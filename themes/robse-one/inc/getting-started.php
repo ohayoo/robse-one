@@ -65,6 +65,8 @@ function robse_one_render_setup() {
 	<div class="wrap">
 		<h1><?php esc_html_e( 'ROBSE ONE setup', 'robse-one' ); ?></h1>
 		<p><?php esc_html_e( 'Start with a page, connect your contact method, then check the site before publishing. Updating the theme does not switch your existing homepage.', 'robse-one' ); ?></p>
+		<?php robse_one_render_corporate_setup(); ?>
+
 		<h2><?php esc_html_e( '1. Choose where the homepage is edited', 'robse-one' ); ?></h2>
 		<p><?php esc_html_e( 'Page content mode displays the page selected in Settings > Reading. The classic starter is edited in the Site Editor. A saved custom Front Page template always takes priority.', 'robse-one' ); ?></p>
 		<p><a class="button" href="<?php echo esc_url( admin_url( 'options-reading.php' ) ); ?>"><?php esc_html_e( 'Select the homepage', 'robse-one' ); ?></a> <a class="button" href="<?php echo esc_url( admin_url( 'post-new.php?post_type=page' ) ); ?>"><?php esc_html_e( 'Create a page with patterns', 'robse-one' ); ?></a></p>

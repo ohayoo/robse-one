@@ -4,7 +4,7 @@ Tags: block-patterns, custom-logo, editor-style, full-site-editing, one-column, 
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.3.0
+Stable tag: 0.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -38,7 +38,12 @@ License: GPL-2.0-or-later, https://www.gnu.org/licenses/old-licenses/gpl-2.0.htm
 == License ==
 This theme is licensed under the GNU General Public License v2 or later.
 
+assets/images/corporate-workshop.webp is an AI-generated demonstration photo supplied by Robse under GPL-2.0-or-later.
+
 == Changelog ==
+= 0.4.0 =
+* Add an opt-in Japanese corporate site setup guide for five editable pages and navigation.
+
 
 = 0.3.0 =
 * Add an opt-in homepage display mode using the selected page content; preserve classic and custom templates.
