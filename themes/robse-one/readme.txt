@@ -4,7 +4,7 @@ Tags: block-patterns, custom-logo, editor-style, full-site-editing, one-column, 
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.15.0
+Stable tag: 0.15.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -61,6 +61,9 @@ assets/images/welfare-facility.webp and assets/images/recruit-training.webp are 
 
 
 == Changelog ==
+= 0.15.1 =
+* Add a final step to the setup guide that links to industry-specific themes on robse.jp, worded for the starter you created. The link only opens a page; the theme sends nothing.
+
 = 0.15.0 =
 * Add four layout designs as style variations: Partner, Grid, Calm and Entry. Each one changes the layout, type and colors of generated starter pages, not only the palette.
 * Bundle Jost, Inter and Cardo (SIL Open Font License 1.1) for the new designs.
