@@ -4,7 +4,7 @@ Tags: block-patterns, custom-logo, editor-style, full-site-editing, one-column, 
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.14.0
+Stable tag: 0.14.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -49,6 +49,11 @@ assets/images/welfare-facility.webp and assets/images/recruit-training.webp are 
 
 
 == Changelog ==
+= 0.14.1 =
+* Add corporate dashboard links for company details, case studies, contact and revisions.
+* Add a case study pattern and clarify the corporate starter introductions.
+
+
 = 0.14.0 =
 * Preview the linked starter pages before publishing.
 * Publish starter pages without replacing the existing homepage or header navigation.
