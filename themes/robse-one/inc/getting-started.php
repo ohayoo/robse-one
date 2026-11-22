@@ -97,6 +97,41 @@ function robse_one_render_setup() {
 			<li><?php esc_html_e( 'Preview as the update owner and confirm they can find and save the right page.', 'robse-one' ); ?></li>
 		</ul>
 		<p><?php esc_html_e( 'Optional: ROBSE ONE Blocks adds a CTA and client menu guide. ROBSE ONE AI creates text outlines and editable drafts; it does not choose images, build a complete website or connect a form.', 'robse-one' ); ?></p>
+		<?php robse_one_render_next_step(); ?>
 	</div>
+	<?php
+}
+
+/**
+ * 6. 業種に合わせたテーマへの案内（robse.jp 配布版だけ・2026-11-22）。
+ * 一括セットアップで作った用途（会社・福祉・採用）に合わせた文言で、テーマの一覧へつなぐ。外部への通信はせず、リンクを出すだけ。
+ * WordPress.org 版には入れない。
+ */
+function robse_one_render_next_step() {
+	$type = 'corporate';
+	foreach ( array_keys( robse_one_starter_types() ) as $key ) {
+		if ( get_option( 'robse_one_starter_profile_' . $key ) ) {
+			$type = $key;
+			break;
+		}
+	}
+	$labels = array(
+		'corporate' => '会社・お店の業種別テーマ',
+		'welfare'   => '福祉事業所のテーマ',
+		'recruit'   => '採用ページのある業種別テーマ',
+	);
+	$label = $labels[ $type ] ?? $labels['corporate'];
+	$url   = add_query_arg(
+		array(
+			'utm_source'   => 'robse-one',
+			'utm_medium'   => 'theme-setup',
+			'utm_campaign' => $type,
+		),
+		'https://robse.jp/themes/'
+	);
+	?>
+	<h2>6. 業種に合わせて作り込むとき</h2>
+	<p>予約・メニュー・施工事例・送迎のお知らせなど、業種ごとの機能と完成見本がそろったテーマもあります（買い切り・テーマの月額料金0円）。</p>
+	<p><a class="button" href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener"><?php echo esc_html( $label ); ?>を見る</a></p>
 	<?php
 }
