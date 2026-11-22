@@ -84,7 +84,7 @@ function robse_one_render_setup() {
 		</form>
 		<p><a class="button button-primary" href="<?php echo esc_url( $mode && $page && ! $custom ? get_edit_post_link( $page->ID, 'raw' ) : admin_url( 'site-editor.php' ) ); ?>"><?php esc_html_e( 'Edit the current homepage', 'robse-one' ); ?></a></p>
 		<h2><?php esc_html_e( '2. Set your colors and logo', 'robse-one' ); ?></h2>
-		<p><?php esc_html_e( 'Open Styles in the Site Editor and choose Default, Editorial or Midnight. Add your logo in the header. Text, surfaces and cards follow the palette; check contrast after changing colors.', 'robse-one' ); ?></p>
+		<p><?php esc_html_e( 'Open Styles in the Site Editor and choose a design. Partner, Grid, Calm and Entry change the layout of generated starter pages as well as colors and type. Add your logo in the header and check contrast after changing colors.', 'robse-one' ); ?></p>
 		<h2><?php esc_html_e( '3. Connect a contact method', 'robse-one' ); ?></h2>
 		<p><?php esc_html_e( 'Replace sample phone numbers with a real tel: link, or insert your form plugin block. Link every contact button to the actual contact section or page. A contact pattern does not send messages.', 'robse-one' ); ?></p>
 		<h2><?php esc_html_e( '4. Prepare the handover', 'robse-one' ); ?></h2>

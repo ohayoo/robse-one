@@ -89,8 +89,8 @@ msgid "2. Set your colors and logo"
 msgstr "2. 配色とロゴを設定する"
 
 #: inc/getting-started.php:81
-msgid "Open Styles in the Site Editor and choose Default, Editorial or Midnight. Add your logo in the header. Text, surfaces and cards follow the palette; check contrast after changing colors."
-msgstr "サイトエディターの「スタイル」で標準・エディトリアル・ミッドナイトから選びます。ヘッダーにロゴを追加できます。文字・背景・カードは配色に連動します。色を変えた後は読みやすさを確認してください。"
+msgid "Open Styles in the Site Editor and choose a design. Partner, Grid, Calm and Entry change the layout of generated starter pages as well as colors and type. Add your logo in the header and check contrast after changing colors."
+msgstr "サイトエディターの「スタイル」でデザインを選べます。パートナー・グリッド・カーム・エントリーは、色や書体だけでなく、セットアップで作ったページの組み方も変わります。ヘッダーにロゴを追加し、色を変えた後は読みやすさを確認してください。"
 
 #: inc/getting-started.php:82
 msgid "3. Connect a contact method"
@@ -910,3 +910,22 @@ msgctxt "Style variation name"
 msgid "Midnight"
 msgstr "ミッドナイト"
 
+#: styles/partner.json
+msgctxt "Style variation name"
+msgid "Partner"
+msgstr "パートナー"
+
+#: styles/grid.json
+msgctxt "Style variation name"
+msgid "Grid"
+msgstr "グリッド"
+
+#: styles/calm.json
+msgctxt "Style variation name"
+msgid "Calm"
+msgstr "カーム"
+
+#: styles/entry.json
+msgctxt "Style variation name"
+msgid "Entry"
+msgstr "エントリー"

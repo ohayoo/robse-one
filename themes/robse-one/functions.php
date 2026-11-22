@@ -39,3 +39,29 @@ add_filter( 'body_class', function ( $classes ) {
 	}
 	return $classes;
 } );
+
+/**
+ * Layout designs. A style variation sets settings.custom.robse.design; the matching
+ * stylesheet in assets/css/designs/ is loaded and a body class is added.
+ */
+function robse_one_active_design() {
+	$design = wp_get_global_settings( array( 'custom', 'robse', 'design' ) );
+	$design = is_string( $design ) ? sanitize_key( $design ) : '';
+	return '' !== $design && is_readable( get_theme_file_path( 'assets/css/designs/' . $design . '.css' ) ) ? $design : '';
+}
+
+add_action( 'wp_enqueue_scripts', function () {
+	$design = robse_one_active_design();
+	if ( $design ) {
+		wp_enqueue_style( 'robse-one-design', get_theme_file_uri( 'assets/css/designs/' . $design . '.css' ), array( 'robse-one-theme' ), wp_get_theme()->get( 'Version' ) );
+	}
+}, 20 );
+
+add_filter( 'body_class', function ( $classes ) {
+	$design = robse_one_active_design();
+	if ( $design ) {
+		$classes[] = 'robse-design';
+		$classes[] = 'robse-design-' . $design;
+	}
+	return $classes;
+} );

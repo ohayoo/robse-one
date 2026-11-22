@@ -100,7 +100,7 @@ msgid "2. Set your colors and logo"
 msgstr ""
 
 #: inc/getting-started.php:81
-msgid "Open Styles in the Site Editor and choose Default, Editorial or Midnight. Add your logo in the header. Text, surfaces and cards follow the palette; check contrast after changing colors."
+msgid "Open Styles in the Site Editor and choose a design. Partner, Grid, Calm and Entry change the layout of generated starter pages as well as colors and type. Add your logo in the header and check contrast after changing colors."
 msgstr ""
 
 #: inc/getting-started.php:82
@@ -919,4 +919,24 @@ msgstr ""
 #: styles/midnight.json
 msgctxt "Style variation name"
 msgid "Midnight"
+msgstr ""
+
+#: styles/partner.json
+msgctxt "Style variation name"
+msgid "Partner"
+msgstr ""
+
+#: styles/grid.json
+msgctxt "Style variation name"
+msgid "Grid"
+msgstr ""
+
+#: styles/calm.json
+msgctxt "Style variation name"
+msgid "Calm"
+msgstr ""
+
+#: styles/entry.json
+msgctxt "Style variation name"
+msgid "Entry"
 msgstr ""
