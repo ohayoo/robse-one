@@ -1,0 +1,233 @@
+/*
+ * Calm — quiet care-sector layout.
+ * Pale sage ground, a floating white header bar, full-bleed photography with
+ * light vertical mincho copy, widely tracked text, green mincho subheads with
+ * serif English captions, and underlined links with a small square arrow.
+ */
+.robse-design-calm {
+	--cm-bg: #f2f5ee;
+	--cm-panel: #ffffff;
+	--cm-ink: #46463f;
+	--cm-head: #3a3a34;
+	--cm-sub: #8a8a80;
+	--cm-green: #2f8a5f;
+	--cm-leaf: #9cc26a;
+	--cm-line: #dfe4d8;
+	--cm-min: "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", serif;
+	--cm-en: Cardo, "Hiragino Mincho ProN", "Yu Mincho", serif;
+	--cm-shell: min(1080px, calc(100% - 96px));
+	background: var(--cm-bg);
+	color: var(--cm-ink);
+	font-family: var(--cm-min);
+	font-size: 15px;
+	line-height: 2.3;
+	letter-spacing: .14em;
+}
+.robse-design-calm :is(h1, h2, h3) { font-family: var(--cm-min); font-weight: 500; letter-spacing: .16em; color: var(--cm-head); line-height: 1.9; }
+
+/* Floating header bar */
+.robse-design-calm .wp-site-blocks > header {
+	position: sticky; top: 18px; z-index: 50; margin: 18px clamp(16px, 2.6vw, 36px) 0; padding-inline: clamp(18px, 2.4vw, 32px);
+	background: rgba(255,255,255,.94) !important; border: 0 !important; border-radius: 6px; box-shadow: 0 2px 18px rgba(70,70,63,.06);
+}
+.robse-design-calm.admin-bar .wp-site-blocks > header { top: calc(18px + var(--wp-admin--admin-bar--height, 32px)); }
+.robse-design-calm .wp-site-blocks > header > .wp-block-group { padding-block: 16px !important; }
+.robse-design-calm .wp-site-blocks > header .wp-block-site-title { font-family: var(--cm-min); font-size: 18px; font-weight: 600; letter-spacing: .16em; }
+.robse-design-calm .wp-site-blocks > header .wp-block-site-title a::before {
+	content: "" !important; display: inline-block !important; width: 18px; height: 14px; margin: 0 10px 0 0; border: 0 !important; transform: none !important;
+	background: linear-gradient(135deg, var(--cm-green) 0 50%, var(--cm-leaf) 50% 100%);
+}
+.robse-design-calm .wp-site-blocks > header .wp-block-navigation { font-family: var(--cm-min); font-size: 13.5px; letter-spacing: .12em; gap: 0 24px; }
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) .wp-site-blocks > main.robse-home-content { margin-top: -88px; }
+
+/* Links and buttons: underlined text with a small green square arrow */
+.robse-design-calm .wp-block-button__link,
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) .wp-block-button__link,
+.robse-design-calm .more a {
+	display: inline-flex; align-items: center; gap: 14px; padding: 0 0 6px; border: 0; border-bottom: 1px solid currentColor; border-radius: 0;
+	background: transparent !important; color: var(--cm-head) !important; font-family: var(--cm-min); font-size: 14.5px; font-weight: 500; letter-spacing: .14em; text-decoration: none; filter: none;
+}
+.robse-design-calm .wp-block-button__link::after,
+.robse-design-calm .more a::after {
+	content: "\203A"; display: grid; place-items: center; width: 22px; height: 22px; margin-bottom: -6px; border-radius: 4px;
+	background: var(--cm-leaf); color: #fff; font-family: sans-serif; font-size: 15px; line-height: 1;
+}
+.robse-design-calm .wp-block-button__link:hover,
+.robse-design-calm .more a:hover { opacity: .65; filter: none; }
+
+/* Section caption: green mincho + serif English below */
+.robse-design-calm.robse-corporate-cover :is(.business, .topics, .outlook, .contact-band) h2 {
+	display: flex; flex-direction: column; gap: 2px; margin: 0 0 40px; color: var(--cm-green); font-family: var(--cm-en); font-size: 15px; font-weight: 400; letter-spacing: .08em; line-height: 1.6;
+}
+.robse-design-calm.robse-corporate-cover :is(.business, .topics, .outlook, .contact-band) h2 small {
+	order: -1; margin: 0; color: var(--cm-green); font-family: var(--cm-min); font-size: 22px; letter-spacing: .18em;
+}
+
+/* ---------- Corporate home ---------- */
+.robse-design-calm.robse-corporate-cover { background: var(--cm-bg); color: var(--cm-ink); }
+.robse-design-calm.robse-corporate-cover .shell { width: var(--cm-shell); }
+.robse-design-calm.robse-corporate-cover .hero {
+	display: grid; grid-template-columns: minmax(300px, 27%) minmax(0, 1fr); align-items: stretch;
+	min-height: min(100vh, 980px); background: var(--cm-bg); color: var(--cm-head);
+}
+.robse-design-calm.robse-corporate-cover .hero::after { display: none; }
+.robse-design-calm.robse-corporate-cover .hero-image { position: relative; inset: auto; z-index: auto; grid-column: 2; grid-row: 1; }
+.robse-design-calm.robse-corporate-cover .hero-image img { filter: saturate(.82) brightness(1.04); }
+.robse-design-calm.robse-corporate-cover .hero-copy {
+	grid-column: 1; grid-row: 1; width: auto; margin: 0; padding: 150px clamp(24px, 2.6vw, 40px) 56px clamp(28px, 4vw, 64px);
+	display: grid; grid-template-columns: auto auto; grid-template-rows: auto 1fr auto; justify-content: start; gap: 0 22px; box-sizing: border-box;
+}
+.robse-design-calm.robse-corporate-cover .hero h1 {
+	grid-column: 1; grid-row: 1; writing-mode: vertical-rl; margin: 0; color: var(--cm-head);
+	font-size: clamp(26px, 2.5vw, 38px); font-weight: 500; letter-spacing: .3em; line-height: 2;
+}
+.robse-design-calm.robse-corporate-cover .hero-copy > p:not(:last-child) { grid-column: 2; grid-row: 1; writing-mode: vertical-rl; margin: 0; color: var(--cm-green); font-size: 13px; letter-spacing: .28em; }
+.robse-design-calm.robse-corporate-cover .hero-copy > p:last-child { grid-column: 1 / -1; grid-row: 3; margin: 0; }
+.robse-design-calm.robse-corporate-cover .hero-copy > p:last-child a { color: var(--cm-head); }
+
+.robse-design-calm.robse-corporate-cover .business { padding-block: clamp(110px, 13vw, 180px) clamp(80px, 10vw, 140px); }
+.robse-design-calm.robse-corporate-cover .business-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(40px, 7vw, 110px); }
+.robse-design-calm.robse-corporate-cover .statement { color: var(--cm-head); font-size: clamp(20px, 2vw, 26px); font-weight: 500; letter-spacing: .18em; line-height: 2.2; }
+.robse-design-calm.robse-corporate-cover .statement em { color: var(--cm-green); }
+.robse-design-calm.robse-corporate-cover .business .lines { border-top: 0; display: grid; gap: 14px; }
+.robse-design-calm.robse-corporate-cover .business .lines li { border: 0; background: var(--cm-panel); border-radius: 6px; }
+.robse-design-calm.robse-corporate-cover .business .lines a {
+	display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "num ja arrow" "num en arrow"; gap: 0 22px; padding: 22px 26px; color: var(--cm-head);
+}
+.robse-design-calm.robse-corporate-cover .business .lines span { grid-area: num; align-self: center; font-family: var(--cm-en); font-size: 22px; color: var(--cm-green); letter-spacing: 0; }
+.robse-design-calm.robse-corporate-cover .business .lines small { grid-area: ja; font-size: 17px; color: var(--cm-head); letter-spacing: .16em; }
+.robse-design-calm.robse-corporate-cover .business .lines strong { grid-area: en; font-family: var(--cm-en); font-size: 13px; font-weight: 400; color: var(--cm-sub); letter-spacing: .06em; }
+.robse-design-calm.robse-corporate-cover .lines b { grid-area: arrow; align-self: center; margin: 0; color: var(--cm-leaf); }
+
+/* Wide landscape band, softly faded, with copy below */
+.robse-design-calm.robse-corporate-cover .outlook { display: block; min-height: 0; padding: 0; background: transparent; color: var(--cm-head); text-align: left; }
+.robse-design-calm.robse-corporate-cover .outlook::after { display: none; }
+.robse-design-calm.robse-corporate-cover .outlook .wp-block-image { position: relative; inset: auto; z-index: auto; width: 100vw; margin-left: calc(50% - 50vw); height: clamp(300px, 38vw, 560px); }
+.robse-design-calm.robse-corporate-cover .outlook .wp-block-image img { opacity: .82; }
+.robse-design-calm.robse-corporate-cover .outlook > .wp-block-group { width: min(720px, 100%); margin: clamp(56px, 7vw, 96px) auto 0; }
+.robse-design-calm.robse-corporate-cover .outlook p:not(.more) { color: var(--cm-head); font-size: clamp(20px, 2vw, 26px); font-weight: 500; letter-spacing: .2em; line-height: 2.2; }
+
+.robse-design-calm.robse-corporate-cover .topics { padding-block: clamp(96px, 12vw, 160px); }
+.robse-design-calm.robse-corporate-cover .topics .lines { border-top: 1px solid var(--cm-line); }
+.robse-design-calm.robse-corporate-cover .topics .lines li { border-bottom: 1px solid var(--cm-line); }
+.robse-design-calm.robse-corporate-cover .topics .lines a { display: grid; grid-template-columns: 140px minmax(0, 1fr) auto; gap: 24px; padding: 24px 0; }
+.robse-design-calm.robse-corporate-cover .topics .lines span { color: var(--cm-green); font-size: 12px; letter-spacing: .14em; }
+.robse-design-calm.robse-corporate-cover .topics .lines strong { font-weight: 500; font-size: 15px; }
+
+/* White panel for contact */
+.robse-design-calm.robse-corporate-cover .contact-band { background: transparent; color: var(--cm-head); padding-block: 0; }
+.robse-design-calm.robse-corporate-cover .contact-band .shell { padding: clamp(44px, 6vw, 88px); background: var(--cm-panel); border-radius: 6px; }
+.robse-design-calm.robse-corporate-cover .contact-band p:not(.more) { color: var(--cm-head); font-size: clamp(20px, 2vw, 26px); font-weight: 500; letter-spacing: .2em; line-height: 2.2; }
+.robse-design-calm.robse-corporate-cover .quick { background: transparent; padding: clamp(56px, 7vw, 96px) 0 clamp(96px, 12vw, 150px); }
+.robse-design-calm.robse-corporate-cover .quick-grid { gap: 14px; }
+.robse-design-calm.robse-corporate-cover .quick-grid a,
+.robse-design-calm.robse-corporate-cover .quick-grid p:nth-child(n) a {
+	min-height: 120px; background: var(--cm-panel); color: var(--cm-head); border-radius: 6px; font-family: var(--cm-min); font-size: 17px; font-weight: 500; letter-spacing: .16em;
+}
+
+/* ---------- Detail pages ---------- */
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) main:not(.robse-home-content) { margin-top: 0; padding-top: clamp(72px, 9vw, 130px) !important; }
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) main:not(.robse-home-content) > h1 {
+	margin-bottom: clamp(40px, 6vw, 72px); color: var(--cm-green); font-size: clamp(26px, 3vw, 38px); font-weight: 500; letter-spacing: .24em;
+}
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) :is(.corp-masthead, .corp-contact-top, .detail-opening, .detail-contact) {
+	gap: clamp(32px, 5vw, 72px); padding: clamp(28px, 4vw, 56px); margin-block-end: clamp(56px, 8vw, 100px);
+	background: var(--cm-panel); color: var(--cm-ink); border-radius: 6px;
+}
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) :is(.corp-masthead, .detail-opening) figure { border-radius: 4px !important; }
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) .corp-mast-copy > p:first-child { color: var(--cm-green) !important; font-family: var(--cm-en); font-size: 14px; font-weight: 400; letter-spacing: .1em; }
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) :is(.corp-mast-copy, .detail-copy) h2 { color: var(--cm-head) !important; font-size: clamp(22px, 2.4vw, 32px); letter-spacing: .2em; line-height: 2; }
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) :is(.corp-detail-section > h2, .detail-sequence > h2) { color: var(--cm-green); font-size: 22px; letter-spacing: .2em; margin-bottom: 28px; }
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) .detail-grid { gap: 14px; }
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) :is(.detail-card, .corp-contact-aside) {
+	background: var(--cm-panel); color: var(--cm-ink); border: 0; border-radius: 6px; padding: clamp(22px, 3vw, 36px);
+}
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) .detail-card :is(h2, h3) { color: var(--cm-green); font-size: 19px; letter-spacing: .18em; margin: 0 0 10px; }
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) .detail-card p { color: var(--cm-ink); font-size: 14px; }
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) .detail-sequence .detail-card > p:first-child { margin: 0; color: var(--cm-leaf); font-family: var(--cm-en); font-size: 26px; letter-spacing: 0; }
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) :is(.corp-detail-panel, .starter-info) { border: 0; background: var(--cm-panel); border-radius: 6px; padding: clamp(22px, 3vw, 40px); }
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) .wp-block-table td { border: 0; border-bottom: 1px solid var(--cm-line); background: transparent !important; padding: 18px 8px; }
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) :is(.corp-detail-band, .detail-band, .corp-demo-link) {
+	background: var(--cm-panel); color: var(--cm-ink); border-radius: 6px; padding: clamp(32px, 5vw, 64px); text-align: center;
+}
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) :is(.corp-detail-band, .detail-band) h2 { color: var(--cm-head) !important; font-size: clamp(20px, 2.2vw, 28px); letter-spacing: .2em; }
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) :is(.corp-detail-band, .detail-band) .wp-block-buttons { justify-content: center; }
+
+/* ---------- Welfare and recruit home ---------- */
+.robse-design-calm.robse-editorial-starter { background: var(--cm-bg); color: var(--cm-ink); }
+.robse-design-calm.robse-editorial-starter .starter-hero,
+.robse-design-calm.robse-recruit-editorial .starter-hero {
+	position: relative; display: grid; grid-template-columns: minmax(300px, 27%) minmax(0, 1fr); align-items: stretch; gap: 0;
+	min-height: min(100vh, 980px); padding: 0; background: var(--cm-bg); color: var(--cm-head);
+}
+.robse-design-calm.robse-recruit-editorial .starter-hero::after { display: none; }
+.robse-design-calm.robse-editorial-starter .starter-hero figure,
+.robse-design-calm.robse-welfare-editorial .starter-hero figure,
+.robse-design-calm.robse-recruit-editorial .starter-hero figure {
+	position: relative; inset: auto; z-index: auto; grid-column: 2; grid-row: 1; margin: 0; aspect-ratio: auto; height: auto; border-radius: 0; overflow: hidden;
+}
+.robse-design-calm.robse-editorial-starter .starter-hero img { filter: saturate(.85) brightness(1.04); }
+.robse-design-calm.robse-editorial-starter .starter-intro {
+	grid-column: 1; grid-row: 1; align-self: stretch;
+	display: grid; grid-template-columns: auto auto; grid-template-rows: auto 1fr auto; justify-content: start; gap: 0 22px;
+	box-sizing: border-box; padding: 150px clamp(24px, 2.6vw, 40px) 56px clamp(28px, 4vw, 64px);
+}
+.robse-design-calm.robse-editorial-starter .starter-intro > p:first-child { grid-column: 2; grid-row: 1; writing-mode: vertical-rl; margin: 0; color: var(--cm-green) !important; font-size: 13px; letter-spacing: .3em; }
+.robse-design-calm.robse-editorial-starter .starter-hero h1,
+.robse-design-calm.robse-welfare-editorial .starter-hero h1,
+.robse-design-calm.robse-recruit-editorial .starter-hero h1 {
+	grid-column: 1; grid-row: 1; writing-mode: vertical-rl; float: none; max-height: none; margin: 0; color: var(--cm-head);
+	font-family: var(--cm-min); font-size: clamp(26px, 2.6vw, 40px); font-weight: 500; letter-spacing: .3em; line-height: 2;
+}
+.robse-design-calm.robse-editorial-starter .starter-intro > p:not(:first-child) {
+	grid-column: 1 / -1; grid-row: 2; align-self: end; margin: 32px 0 24px; color: var(--cm-ink); font-size: 13.5px; letter-spacing: .14em; line-height: 2.2;
+}
+.robse-design-calm.robse-editorial-starter .starter-intro > .wp-block-buttons { grid-column: 1 / -1; grid-row: 3; }
+.robse-design-calm.robse-recruit-editorial .starter-intro > p:first-child { color: var(--cm-green) !important; }
+.robse-design-calm.robse-editorial-starter .starter-main { width: var(--cm-shell); padding-block: clamp(110px, 13vw, 180px) clamp(72px, 9vw, 120px); }
+.robse-design-calm.robse-editorial-starter .starter-main > h2 { margin-bottom: 48px; color: var(--cm-green); font-size: clamp(22px, 2.2vw, 28px); letter-spacing: .22em; text-align: center; }
+.robse-design-calm.robse-editorial-starter .starter-main { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.robse-design-calm.robse-editorial-starter .starter-main > h2 { grid-column: 1 / -1; }
+.robse-design-calm.robse-editorial-starter .starter-route,
+.robse-design-calm.robse-recruit-editorial .starter-route {
+	display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: clamp(26px, 3vw, 40px); border: 0; background: var(--cm-panel); border-radius: 6px;
+}
+.robse-design-calm.robse-editorial-starter .starter-route h2 { color: var(--cm-green); font-size: 20px; letter-spacing: .2em; }
+.robse-design-calm.robse-editorial-starter .starter-route p { margin: 0 0 auto; font-size: 14px; }
+.robse-design-calm.robse-editorial-starter .starter-call {
+	width: var(--cm-shell); margin: 0 auto clamp(96px, 12vw, 150px); padding: clamp(44px, 6vw, 88px);
+	background: var(--cm-panel); color: var(--cm-ink); border-radius: 6px; text-align: center;
+}
+.robse-design-calm.robse-editorial-starter .starter-call h2 { color: var(--cm-head); font-size: clamp(20px, 2.2vw, 28px); letter-spacing: .22em; }
+.robse-design-calm.robse-editorial-starter .starter-call .wp-block-buttons { justify-content: center; }
+.robse-design-calm.robse-editorial-starter :is(.starter-entry, .starter-process-step) { border-top: 1px solid var(--cm-line); }
+.robse-design-calm.robse-editorial-starter .starter-lead { color: var(--cm-head); }
+.robse-design-calm.robse-editorial-starter .starter-lead figure,
+.robse-design-calm.robse-welfare-editorial .detail-opening figure { border-radius: 4px; }
+
+/* Footer */
+.robse-design-calm .wp-site-blocks > footer > .wp-block-group { background: var(--cm-panel) !important; }
+
+@media (max-width: 760px) {
+	.robse-design-calm { --cm-shell: calc(100% - 40px); letter-spacing: .08em; }
+	.robse-design-calm .wp-site-blocks > header { top: 8px; margin: 8px 8px 0; }
+	.robse-design-calm .wp-site-blocks > header .wp-block-navigation { gap: 0 14px; }
+	.robse-design-calm.robse-corporate-cover .hero,
+	.robse-design-calm.robse-editorial-starter .starter-hero { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+	.robse-design-calm.robse-corporate-cover .hero-copy,
+	.robse-design-calm.robse-editorial-starter .starter-intro { padding: 110px 24px 36px; }
+	.robse-design-calm.robse-corporate-cover .hero-image,
+	.robse-design-calm.robse-editorial-starter .starter-hero figure { grid-column: 1; grid-row: 2; height: 320px; }
+	.robse-design-calm.robse-corporate-cover .business-grid,
+	.robse-design-calm.robse-editorial-starter .starter-main { grid-template-columns: 1fr; }
+	.robse-design-calm.robse-corporate-cover .topics .lines a { grid-template-columns: minmax(0, 1fr) auto; gap: 6px 16px; }
+	.robse-design-calm.robse-corporate-cover .topics .lines span { grid-column: 1 / -1; }
+	.robse-design-calm.robse-corporate-cover .quick-grid { grid-template-columns: 1fr; }
+}
+.robse-design-calm.robse-corporate-cover .topics .lines b { grid-area: auto; }
+
+/* Detail pages use the full shell width instead of the 760px content width. */
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) main:not(.robse-home-content) { width: min(1080px, calc(100% - 96px)) !important; max-width: none; margin-inline: auto; padding-inline: 0; }
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) main:not(.robse-home-content) > *,
+.robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) main:not(.robse-home-content) .wp-block-post-content > * { max-width: none !important; }
+@media (max-width: 760px) { .robse-design-calm:is(.robse-corporate-cover, .robse-editorial-starter) main:not(.robse-home-content) { width: calc(100% - 40px) !important; } }

@@ -1,0 +1,95 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.6/theme.json",
+	"version": 3,
+	"title": "Grid",
+	"settings": {
+		"color": {
+			"palette": [
+				{
+					"name": "Ink",
+					"slug": "ink",
+					"color": "#0e0f11"
+				},
+				{
+					"name": "Ocean",
+					"slug": "ocean",
+					"color": "#2c64f6"
+				},
+				{
+					"name": "Mint",
+					"slug": "mint",
+					"color": "#e9ecf1"
+				},
+				{
+					"name": "Paper",
+					"slug": "paper",
+					"color": "#f3f4f6"
+				},
+				{
+					"name": "White",
+					"slug": "white",
+					"color": "#ffffff"
+				}
+			]
+		},
+		"typography": {
+			"fontFamilies": [
+				{
+					"name": "Inter",
+					"slug": "inter",
+					"fontFamily": "Inter, \"Hiragino Sans\", \"Hiragino Kaku Gothic ProN\", \"Noto Sans JP\", \"Yu Gothic\", YuGothic, Meiryo, sans-serif",
+					"fontFace": [
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "normal",
+							"fontWeight": "100 900",
+							"fontDisplay": "swap",
+							"src": [
+								"file:./assets/fonts/inter/Inter-VariableFont.woff2"
+							]
+						}
+					]
+				},
+				{
+					"name": "Japanese Sans",
+					"slug": "jp-sans",
+					"fontFamily": "\"Hiragino Sans\", \"Hiragino Kaku Gothic ProN\", \"Noto Sans JP\", \"Yu Gothic\", YuGothic, Meiryo, sans-serif"
+				}
+			]
+		},
+		"custom": {
+			"robse": {
+				"radius": "0.25rem",
+				"design": "grid"
+			}
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var(--wp--preset--color--white)",
+			"text": "var(--wp--preset--color--ink)"
+		},
+		"typography": {
+			"fontFamily": "var(--wp--preset--font-family--inter)"
+		},
+		"elements": {
+			"button": {
+				"border": {
+					"radius": "999px"
+				},
+				"color": {
+					"background": "var(--wp--preset--color--ink)",
+					"text": "#ffffff"
+				},
+				"typography": {
+					"fontWeight": "500"
+				}
+			},
+			"link": {
+				"color": {
+					"text": "var(--wp--preset--color--ink)"
+				}
+			}
+		}
+	}
+}

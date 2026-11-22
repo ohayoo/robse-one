@@ -51,6 +51,8 @@ function robse_one_corporate_records( $type ) {
 }
 
 require_once __DIR__ . '/starter-profile.php';
+require_once __DIR__ . '/corporate-maintenance.php';
+
 
 function robse_one_starter_page_url( $id ) {
 	return esc_url( add_query_arg( 'page_id', $id, home_url( '/' ) ) );

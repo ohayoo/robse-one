@@ -4,7 +4,7 @@ Tags: block-patterns, custom-logo, editor-style, full-site-editing, one-column, 
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.14.0
+Stable tag: 0.15.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -28,7 +28,19 @@ The theme does not bundle forms, custom post types, or custom blocks.
 ROBSE ONE WordPress Theme, (C) 2026 Robse.
 ROBSE ONE is distributed under the terms of the GNU GPL v2 or later.
 
-No third-party images, fonts or scripts are bundled.
+No third-party images or scripts are bundled. The following fonts are bundled:
+
+Jost
+Copyright 2020 The Jost Project Authors (https://github.com/indestructible-type)
+License: SIL Open Font License, Version 1.1 (assets/fonts/jost/OFL.txt)
+
+Inter
+Copyright 2020 The Inter Project Authors (https://github.com/rsms/inter)
+License: SIL Open Font License, Version 1.1 (assets/fonts/inter/LICENSE.txt)
+
+Cardo
+Copyright (c) 2002-2011, David J. Perry
+License: SIL Open Font License, Version 1.1 (assets/fonts/cardo/LICENSE.txt)
 assets/images/studio-shapes.svg is original artwork by Robse, (C) 2026 Robse, licensed GPL-2.0-or-later.
 
 Screenshot
@@ -49,6 +61,16 @@ assets/images/welfare-facility.webp and assets/images/recruit-training.webp are 
 
 
 == Changelog ==
+= 0.15.0 =
+* Add four layout designs as style variations: Partner, Grid, Calm and Entry. Each one changes the layout, type and colors of generated starter pages, not only the palette.
+* Bundle Jost, Inter and Cardo (SIL Open Font License 1.1) for the new designs.
+* Break Japanese headings in starter pages at natural phrase boundaries.
+
+= 0.14.1 =
+* Add corporate dashboard links for company details, case studies, contact and revisions.
+* Add a case study pattern and clarify the corporate starter introductions.
+
+
 = 0.14.0 =
 * Preview the linked starter pages before publishing.
 * Publish starter pages without replacing the existing homepage or header navigation.

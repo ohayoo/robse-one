@@ -1,0 +1,263 @@
+/*
+ * Partner — light corporate layout.
+ * Off-white ground, a short rule after English section labels, numbered lists
+ * with large Japanese titles and English subtitles, and dark pill buttons.
+ */
+.robse-design-partner {
+	--pt-bg: #f7f7f5;
+	--pt-panel: #ffffff;
+	--pt-ink: #2b2b2b;
+	--pt-sub: #6f6f6a;
+	--pt-rule: #8f8f8a;
+	--pt-line: #d9d9d4;
+	--pt-tag: #1f7f8a;
+	--pt-en: Jost, "Hiragino Sans", "Noto Sans JP", sans-serif;
+	--pt-shell: min(1120px, calc(100% - 96px));
+	background: var(--pt-bg);
+	color: var(--pt-ink);
+	font-size: 15px;
+	line-height: 2;
+	letter-spacing: .04em;
+	font-feature-settings: "palt";
+}
+.robse-design-partner :is(h1, h2, h3) { font-weight: 500; letter-spacing: .04em; color: var(--pt-ink); }
+
+/* Header */
+.robse-design-partner .wp-site-blocks > header { background: transparent !important; padding-inline: clamp(20px, 3vw, 48px); }
+.robse-design-partner .wp-site-blocks > header > .wp-block-group { padding-block: 22px !important; }
+.robse-design-partner .wp-site-blocks > header .wp-block-site-title { font-family: var(--pt-en); font-size: 17px; font-weight: 600; letter-spacing: .14em; }
+.robse-design-partner .wp-site-blocks > header .wp-block-site-title a::before { display: none !important; }
+.robse-design-partner .wp-site-blocks > header .wp-block-navigation { font-size: 12.5px; font-weight: 500; letter-spacing: .06em; gap: 0 26px; }
+.robse-design-partner .wp-site-blocks > header .wp-block-navigation-item__content:hover { opacity: .55; }
+
+/* Buttons and "View More" links */
+.robse-design-partner .wp-block-button__link,
+.robse-design-partner:is(.robse-corporate-cover, .robse-editorial-starter) .wp-block-button__link,
+.robse-design-partner .more a {
+	display: inline-flex; align-items: center; gap: 12px;
+	padding: 15px 30px; border: 0; border-radius: 999px;
+	background: var(--pt-ink) !important; color: #fff !important;
+	font-family: var(--pt-en); font-size: 14px; font-weight: 500; letter-spacing: .06em; line-height: 1.4;
+	text-decoration: none; filter: none;
+	transition: opacity .2s ease;
+}
+.robse-design-partner .wp-block-button__link::after { content: "\2192"; font-size: 15px; }
+.robse-design-partner .wp-block-button__link:hover,
+.robse-design-partner .more a:hover { opacity: .78; filter: none; }
+
+/* ---------- Corporate home ---------- */
+.robse-design-partner.robse-corporate-cover { background: var(--pt-bg); color: var(--pt-ink); }
+.robse-design-partner.robse-corporate-cover .shell { width: var(--pt-shell); }
+
+/* Hero: large regular-weight copy on the ground, photo as a wide band below. */
+.robse-design-partner.robse-corporate-cover .hero {
+	display: flex; flex-direction: column-reverse; min-height: 0;
+	background: transparent; color: var(--pt-ink); padding-block: clamp(48px, 8vw, 120px) 0;
+}
+.robse-design-partner.robse-corporate-cover .hero::after { display: none; }
+.robse-design-partner.robse-corporate-cover .hero-image {
+	position: static; z-index: auto; width: var(--pt-shell); margin: clamp(40px, 6vw, 88px) auto 0;
+	aspect-ratio: 16 / 7; overflow: hidden; border-radius: 6px;
+}
+.robse-design-partner.robse-corporate-cover .hero-copy {
+	width: var(--pt-shell); margin: 0 auto; padding: 0;
+	display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; column-gap: 40px;
+}
+.robse-design-partner.robse-corporate-cover .hero h1 {
+	grid-column: 1 / -1; color: var(--pt-ink);
+	font-size: clamp(38px, 5.6vw, 84px); font-weight: 400; letter-spacing: .06em; line-height: 1.45;
+}
+.robse-design-partner.robse-corporate-cover .hero-copy > p:not(:last-child) {
+	grid-column: 2; margin: 18px 0 0; font-family: var(--pt-en); font-size: 15px; font-weight: 500; letter-spacing: .08em; color: var(--pt-ink);
+}
+.robse-design-partner.robse-corporate-cover .hero-copy > p:last-child { grid-column: 2; margin: 18px 0 0; }
+.robse-design-partner.robse-corporate-cover .hero-copy > p:last-child a {
+	color: var(--pt-ink); font-family: var(--pt-en); font-size: 13px; font-weight: 500; letter-spacing: .1em;
+	text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 3px;
+}
+
+/* Section labels: "Business ——" */
+.robse-design-partner.robse-corporate-cover :is(.business, .topics, .outlook, .contact-band) h2 {
+	display: flex; align-items: center; gap: 14px; margin: 0 0 clamp(28px, 4vw, 48px);
+	color: var(--pt-ink); font-family: var(--pt-en); font-size: 25px; font-weight: 500; letter-spacing: .04em; line-height: 1.2;
+}
+.robse-design-partner.robse-corporate-cover :is(.business, .topics, .outlook, .contact-band) h2::after {
+	content: ""; width: 64px; height: 1px; background: currentColor; order: 2;
+}
+.robse-design-partner.robse-corporate-cover :is(.business, .topics, .outlook, .contact-band) h2 small {
+	order: 3; margin: 0; font-family: inherit; font-size: 12px; font-weight: 400; color: var(--pt-sub); letter-spacing: .1em;
+}
+
+.robse-design-partner.robse-corporate-cover .business { padding-block: clamp(96px, 12vw, 168px) clamp(64px, 8vw, 120px); }
+.robse-design-partner.robse-corporate-cover .business-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 0 clamp(40px, 7vw, 110px); }
+.robse-design-partner.robse-corporate-cover .statement { font-size: clamp(22px, 2.4vw, 32px); font-weight: 500; line-height: 1.75; letter-spacing: .05em; }
+.robse-design-partner.robse-corporate-cover .statement em { color: inherit; }
+.robse-design-partner.robse-corporate-cover .business .more { margin-top: 36px; }
+
+/* Numbered list: 01 / large Japanese title / English subtitle / arrow */
+.robse-design-partner.robse-corporate-cover .business .lines { border-top: 0; }
+.robse-design-partner.robse-corporate-cover .business .lines li { border-top: 1.5px solid var(--pt-rule); border-bottom: 0; }
+.robse-design-partner.robse-corporate-cover .business .lines li:last-child { border-bottom: 1px solid var(--pt-line); }
+.robse-design-partner.robse-corporate-cover .business .lines a {
+	display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "num arrow" "ja arrow" "en arrow";
+	gap: 0; padding: 18px 0 30px; color: var(--pt-ink);
+}
+.robse-design-partner.robse-corporate-cover .business .lines span { grid-area: num; font-family: var(--pt-en); font-size: 13px; font-weight: 600; color: var(--pt-ink); letter-spacing: .04em; }
+.robse-design-partner.robse-corporate-cover .business .lines small { grid-area: ja; margin-top: 18px; font-size: clamp(22px, 2.3vw, 30px); font-weight: 500; color: var(--pt-ink); letter-spacing: .06em; line-height: 1.4; }
+.robse-design-partner.robse-corporate-cover .business .lines strong { grid-area: en; margin-top: 6px; font-family: var(--pt-en); font-size: 14px; font-weight: 500; letter-spacing: .04em; }
+.robse-design-partner.robse-corporate-cover .lines b { grid-area: arrow; align-self: center; margin: 0; color: var(--pt-ink); font-size: 0; }
+.robse-design-partner.robse-corporate-cover .lines b::after { content: "\2192"; font-size: 20px; font-weight: 400; }
+.robse-design-partner.robse-corporate-cover .lines a:hover { color: var(--pt-ink); opacity: .6; }
+
+/* Case study: photo left, copy right */
+.robse-design-partner.robse-corporate-cover .outlook {
+	display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(36px, 6vw, 96px); align-items: center;
+	min-height: 0; padding: clamp(48px, 7vw, 96px) 0; background: transparent; color: var(--pt-ink); text-align: left;
+}
+.robse-design-partner.robse-corporate-cover .outlook::after { display: none; }
+.robse-design-partner.robse-corporate-cover .outlook .wp-block-image { position: static; z-index: auto; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 6px; }
+.robse-design-partner.robse-corporate-cover .outlook p:not(.more) { font-size: clamp(22px, 2.4vw, 32px); font-weight: 500; line-height: 1.7; letter-spacing: .05em; color: var(--pt-ink); }
+.robse-design-partner.robse-corporate-cover .outlook a { color: #fff; }
+
+/* Insights list with outlined category tags */
+.robse-design-partner.robse-corporate-cover .topics { padding-block: clamp(72px, 9vw, 130px); }
+.robse-design-partner.robse-corporate-cover .topics .lines { border-top: 1px solid var(--pt-line); }
+.robse-design-partner.robse-corporate-cover .topics .lines li { border-bottom: 1px solid var(--pt-line); }
+.robse-design-partner.robse-corporate-cover .topics .lines a { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; align-items: center; gap: 24px; padding: 26px 0; }
+.robse-design-partner.robse-corporate-cover .topics .lines span {
+	justify-self: start; padding: 2px 12px; border: 1px solid var(--pt-tag); border-radius: 999px;
+	color: var(--pt-tag); font-size: 11px; line-height: 1.6; letter-spacing: .06em;
+}
+.robse-design-partner.robse-corporate-cover .topics .lines strong { font-size: 16px; font-weight: 500; }
+.robse-design-partner.robse-corporate-cover .topics .lines b { grid-area: auto; }
+
+/* Contact: white panel */
+.robse-design-partner.robse-corporate-cover .contact-band { background: transparent; color: var(--pt-ink); padding-block: 0 clamp(72px, 9vw, 120px); }
+.robse-design-partner.robse-corporate-cover .contact-band .shell { padding: clamp(40px, 6vw, 88px); background: var(--pt-panel); border-radius: 8px; }
+.robse-design-partner.robse-corporate-cover .contact-band h2 { color: var(--pt-ink); }
+.robse-design-partner.robse-corporate-cover .contact-band p:not(.more) { font-size: clamp(24px, 3vw, 40px); font-weight: 500; line-height: 1.6; letter-spacing: .05em; color: var(--pt-ink); }
+.robse-design-partner.robse-corporate-cover .contact-band .more { text-align: right; }
+.robse-design-partner.robse-corporate-cover .contact-band a { color: #fff; }
+
+/* Quick links */
+.robse-design-partner.robse-corporate-cover .quick { background: transparent; padding: 0 0 clamp(80px, 10vw, 140px); }
+.robse-design-partner.robse-corporate-cover .quick-grid { gap: 0 32px; }
+.robse-design-partner.robse-corporate-cover .quick-grid a,
+.robse-design-partner.robse-corporate-cover .quick-grid p:nth-child(n) a {
+	display: flex; justify-content: space-between; align-items: center; min-height: 0; padding: 22px 0;
+	background: transparent; color: var(--pt-ink); border-top: 1.5px solid var(--pt-rule);
+	font-family: var(--pt-en); font-size: 20px; font-weight: 500; text-align: left;
+}
+.robse-design-partner.robse-corporate-cover .quick-grid a::after { content: "\2192"; font-size: 18px; }
+
+/* ---------- Corporate detail pages ---------- */
+.robse-design-partner.robse-corporate-cover main:not(.robse-home-content) { padding-top: clamp(56px, 8vw, 110px) !important; }
+.robse-design-partner.robse-corporate-cover main:not(.robse-home-content) > h1,
+.robse-design-partner.robse-editorial-starter main:not(.robse-home-content) > h1 {
+	font-size: clamp(34px, 4.6vw, 64px); font-weight: 500; letter-spacing: .06em; margin-bottom: clamp(32px, 5vw, 64px);
+}
+.robse-design-partner.robse-corporate-cover :is(.corp-masthead, .corp-contact-top) { background: transparent; color: var(--pt-ink); padding: 0; gap: clamp(32px, 6vw, 88px); margin-block-end: clamp(64px, 9vw, 120px); }
+.robse-design-partner.robse-corporate-cover .corp-masthead figure { border-radius: 6px; }
+.robse-design-partner.robse-corporate-cover .corp-mast-copy > p:first-child,
+.robse-design-partner.robse-corporate-cover .corp-contact-top .corp-mast-copy > p:first-child { font-family: var(--pt-en); font-size: 13px; font-weight: 600; color: var(--pt-ink); letter-spacing: .12em; }
+.robse-design-partner.robse-corporate-cover .corp-mast-copy h2,
+.robse-design-partner.robse-corporate-cover .corp-contact-top .corp-mast-copy h2 { color: var(--pt-ink); font-size: clamp(26px, 3.2vw, 44px); font-weight: 500; line-height: 1.55; }
+.robse-design-partner.robse-corporate-cover .corp-detail-section > h2,
+.robse-design-partner.robse-corporate-cover .detail-sequence > h2 { font-size: 22px; margin-bottom: 28px; }
+.robse-design-partner:is(.robse-corporate-cover, .robse-editorial-starter) .detail-grid { gap: 0 32px; }
+.robse-design-partner:is(.robse-corporate-cover, .robse-editorial-starter) :is(.detail-card, .corp-contact-aside) {
+	background: transparent; color: var(--pt-ink); border: 0; border-top: 1.5px solid var(--pt-rule); border-radius: 0; padding: 18px 0 28px;
+}
+.robse-design-partner:is(.robse-corporate-cover, .robse-editorial-starter) .detail-card :is(h2, h3) { font-size: clamp(20px, 2vw, 26px); font-weight: 500; margin: 14px 0 10px; }
+.robse-design-partner:is(.robse-corporate-cover, .robse-editorial-starter) .detail-card p { color: var(--pt-sub); }
+.robse-design-partner:is(.robse-corporate-cover, .robse-editorial-starter) .detail-sequence .detail-card > p:first-child { font-family: var(--pt-en); font-size: 13px; font-weight: 600; color: var(--pt-ink); margin: 0; }
+.robse-design-partner.robse-corporate-cover .corp-detail-panel { border: 0; padding: 0; }
+.robse-design-partner:is(.robse-corporate-cover, .robse-editorial-starter) .wp-block-table td { border: 0; border-bottom: 1px solid var(--pt-line); background: transparent !important; padding: 18px 8px; }
+.robse-design-partner:is(.robse-corporate-cover, .robse-editorial-starter) .wp-block-table tr:first-child td { border-top: 1.5px solid var(--pt-rule); }
+.robse-design-partner:is(.robse-corporate-cover, .robse-editorial-starter) :is(.corp-detail-band, .detail-band, .corp-demo-link) {
+	background: var(--pt-panel); color: var(--pt-ink); border-radius: 8px; padding: clamp(32px, 5vw, 64px);
+}
+.robse-design-partner:is(.robse-corporate-cover, .robse-editorial-starter) :is(.corp-detail-band, .detail-band) h2 { color: var(--pt-ink); font-size: clamp(22px, 2.6vw, 34px); }
+
+/* ---------- Welfare and recruit starters ---------- */
+.robse-design-partner.robse-editorial-starter { background: var(--pt-bg); color: var(--pt-ink); --editorial-ink: #2b2b2b; --editorial-line: #d9d9d4; }
+.robse-design-partner.robse-editorial-starter .wp-site-blocks > header { border-bottom: 0; }
+.robse-design-partner.robse-editorial-starter .starter-hero,
+.robse-design-partner.robse-recruit-editorial .starter-hero {
+	position: static; display: flex; flex-direction: column; min-height: 0;
+	padding: clamp(48px, 8vw, 120px) 0 0; background: transparent; color: var(--pt-ink); gap: 0;
+}
+.robse-design-partner.robse-recruit-editorial .starter-hero::after { display: none; }
+.robse-design-partner.robse-editorial-starter .starter-hero figure,
+.robse-design-partner.robse-recruit-editorial .starter-hero figure {
+	position: static; z-index: auto; width: var(--pt-shell); margin: clamp(40px, 6vw, 88px) auto 0;
+	aspect-ratio: 16 / 7; border-radius: 6px; overflow: hidden;
+}
+.robse-design-partner.robse-editorial-starter .starter-intro {
+	width: var(--pt-shell); margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 360px); column-gap: 48px; align-items: end;
+}
+.robse-design-partner.robse-editorial-starter .starter-intro > p:first-child { grid-column: 1 / -1; font-family: var(--pt-en); font-size: 13px; font-weight: 600; color: var(--pt-ink) !important; letter-spacing: .12em; }
+.robse-design-partner.robse-editorial-starter .starter-hero h1,
+.robse-design-partner.robse-welfare-editorial .starter-hero h1,
+.robse-design-partner.robse-recruit-editorial .starter-hero h1 {
+	grid-column: 1; grid-row: 2 / span 2; margin: 0; color: var(--pt-ink);
+	font-family: inherit; font-size: clamp(36px, 5.2vw, 78px); font-weight: 400; letter-spacing: .06em; line-height: 1.45;
+}
+.robse-design-partner.robse-editorial-starter .starter-intro > p:not(:first-child) { grid-column: 2; color: var(--pt-sub); margin: 0 0 20px; }
+.robse-design-partner.robse-editorial-starter .starter-intro > .wp-block-buttons { grid-column: 2; }
+.robse-design-partner.robse-editorial-starter .starter-main { width: var(--pt-shell); padding-block: clamp(96px, 12vw, 160px) clamp(64px, 8vw, 110px); }
+.robse-design-partner.robse-editorial-starter .starter-main > h2 {
+	display: flex; align-items: center; gap: 14px; margin-bottom: clamp(32px, 5vw, 56px); font-size: clamp(22px, 2.2vw, 28px);
+}
+.robse-design-partner.robse-editorial-starter .starter-main > h2::after { content: ""; width: 64px; height: 1px; background: currentColor; }
+.robse-design-partner.robse-editorial-starter .starter-route,
+.robse-design-partner.robse-recruit-editorial .starter-route {
+	grid-template-columns: minmax(0, .9fr) minmax(0, 1.3fr) auto; padding-block: 32px; border-top: 1.5px solid var(--pt-rule);
+}
+.robse-design-partner.robse-editorial-starter .starter-route:last-child { border-bottom: 1px solid var(--pt-line); }
+.robse-design-partner.robse-editorial-starter .starter-route h2 { font-size: clamp(22px, 2.3vw, 30px); font-weight: 500; }
+.robse-design-partner.robse-editorial-starter .starter-route p { color: var(--pt-sub); }
+.robse-design-partner.robse-editorial-starter .starter-call {
+	width: var(--pt-shell); margin: 0 auto clamp(80px, 10vw, 140px); padding: clamp(40px, 6vw, 88px);
+	background: var(--pt-panel); color: var(--pt-ink); border-radius: 8px; text-align: left;
+}
+.robse-design-partner.robse-editorial-starter .starter-call h2 { color: var(--pt-ink); font-size: clamp(24px, 3vw, 40px); font-weight: 500; line-height: 1.6; }
+.robse-design-partner.robse-editorial-starter .starter-call .wp-block-buttons { justify-content: flex-end; }
+.robse-design-partner.robse-editorial-starter :is(.detail-opening, .detail-contact),
+.robse-design-partner.robse-recruit-editorial :is(.detail-opening, .detail-contact) { background: transparent; color: var(--pt-ink); padding: 0; margin-block-end: clamp(64px, 9vw, 120px); }
+.robse-design-partner.robse-editorial-starter .detail-copy h2,
+.robse-design-partner.robse-recruit-editorial .detail-copy h2 { color: var(--pt-ink); font-size: clamp(26px, 3.2vw, 44px); font-weight: 500; line-height: 1.55; }
+.robse-design-partner.robse-editorial-starter .detail-opening figure,
+.robse-design-partner.robse-welfare-editorial .detail-opening figure { border-radius: 6px; }
+.robse-design-partner.robse-editorial-starter .starter-info { border: 0; padding: 0; }
+.robse-design-partner.robse-editorial-starter .starter-lead { color: var(--pt-ink); }
+.robse-design-partner.robse-editorial-starter .starter-lead figure { border-radius: 6px; }
+.robse-design-partner.robse-editorial-starter :is(.starter-entry, .starter-process-step) { border-top: 1.5px solid var(--pt-rule); }
+
+/* Footer */
+.robse-design-partner .wp-site-blocks > footer > .wp-block-group { background: transparent !important; border-top: 1px solid var(--pt-line); }
+.robse-design-partner .wp-site-blocks > footer .wp-block-site-title { font-family: var(--pt-en); font-weight: 600; letter-spacing: .12em; }
+
+@media (max-width: 760px) {
+	.robse-design-partner { --pt-shell: calc(100% - 40px); }
+	.robse-design-partner .wp-site-blocks > header .wp-block-navigation { gap: 0 16px; }
+	.robse-design-partner.robse-corporate-cover .hero-copy,
+	.robse-design-partner.robse-editorial-starter .starter-intro { grid-template-columns: 1fr; }
+	.robse-design-partner.robse-corporate-cover .hero-copy > p,
+	.robse-design-partner.robse-editorial-starter .starter-intro > *:not(h1) { grid-column: 1 !important; }
+	.robse-design-partner.robse-editorial-starter .starter-hero h1 { grid-row: auto; }
+	.robse-design-partner.robse-corporate-cover .hero-image,
+	.robse-design-partner.robse-editorial-starter .starter-hero figure { aspect-ratio: 4 / 3; margin-top: 36px; }
+	.robse-design-partner.robse-corporate-cover :is(.business-grid, .outlook) { grid-template-columns: 1fr; }
+	.robse-design-partner.robse-corporate-cover .topics .lines a { grid-template-columns: minmax(0, 1fr) auto; gap: 8px 16px; }
+	.robse-design-partner.robse-corporate-cover .topics .lines span { grid-column: 1 / -1; }
+	.robse-design-partner.robse-corporate-cover .quick-grid { grid-template-columns: 1fr; }
+	.robse-design-partner.robse-editorial-starter .starter-route { grid-template-columns: 1fr; }
+	.robse-design-partner.robse-editorial-starter .starter-call .wp-block-buttons { justify-content: flex-start; }
+}
+
+/* Detail pages use the full shell width instead of the 760px content width. */
+.robse-design-partner:is(.robse-corporate-cover, .robse-editorial-starter) main:not(.robse-home-content) { width: min(1120px, calc(100% - 96px)) !important; max-width: none; margin-inline: auto; padding-inline: 0; }
+.robse-design-partner:is(.robse-corporate-cover, .robse-editorial-starter) main:not(.robse-home-content) > *,
+.robse-design-partner:is(.robse-corporate-cover, .robse-editorial-starter) main:not(.robse-home-content) .wp-block-post-content > * { max-width: none !important; }
+@media (max-width: 760px) { .robse-design-partner:is(.robse-corporate-cover, .robse-editorial-starter) main:not(.robse-home-content) { width: calc(100% - 40px) !important; } }
