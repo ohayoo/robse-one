@@ -1,0 +1,40 @@
+{
+  "version": 3,
+  "title": "Editorial",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "name": "Ink",
+          "slug": "ink",
+          "color": "#22201d"
+        },
+        {
+          "name": "Ocean",
+          "slug": "ocean",
+          "color": "#875329"
+        },
+        {
+          "name": "Mint",
+          "slug": "mint",
+          "color": "#f1e7d9"
+        },
+        {
+          "name": "Paper",
+          "slug": "paper",
+          "color": "#f6f3ec"
+        },
+        {
+          "name": "White",
+          "slug": "white",
+          "color": "#fffdf8"
+        }
+      ]
+    },
+    "custom": {
+      "robse": {
+        "radius": "0.25rem"
+      }
+    }
+  }
+}

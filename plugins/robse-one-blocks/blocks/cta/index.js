@@ -2,6 +2,21 @@
   'use strict';
 
   var el = wp.element.createElement;
+  var __ = wp.i18n.__;
+
+  // Used when the attribute has never been set. render.php uses the same texts.
+  var defaults = {
+    heading: __('Feel free to contact us', 'robse-one-blocks'),
+    body: __('We look forward to your questions and quote requests about our services.', 'robse-one-blocks'),
+    buttonLabel: __('Contact us', 'robse-one-blocks')
+  };
+
+  function value(attributes, key) {
+    if (typeof attributes[key] === 'string') {
+      return attributes[key];
+    }
+    return defaults[key] || '';
+  }
 
   wp.blocks.registerBlockType('robse-one/cta', {
     edit: function (props) {
@@ -13,7 +28,7 @@
           el(multiline ? 'textarea' : 'input', {
             type: multiline ? undefined : 'text',
             rows: multiline ? 3 : undefined,
-            value: attributes[key] || '',
+            value: value(attributes, key),
             onChange: function (event) {
               var next = {};
               next[key] = event.target.value;
@@ -23,17 +38,17 @@
         );
       }
 
-      return el('div', { className: 'robse-cta-editor' },
+      return el('div', wp.blockEditor.useBlockProps({ className: 'robse-cta-editor' }),
         el('div', { className: 'robse-cta-editor__preview' },
-          el('h2', null, attributes.heading || '見出しを入力'),
-          el('p', null, attributes.body || '説明文を入力'),
-          el('span', { className: 'robse-block-cta__button' }, attributes.buttonLabel || 'ボタン文言')
+          el('h2', null, value(attributes, 'heading') || __('Enter a heading', 'robse-one-blocks')),
+          el('p', null, value(attributes, 'body') || __('Enter a description', 'robse-one-blocks')),
+          attributes.buttonUrl ? el('span', { className: 'robse-block-cta__button' }, value(attributes, 'buttonLabel') || __('Button text', 'robse-one-blocks')) : el('p', null, __('Add a link URL to show the contact button.', 'robse-one-blocks'))
         ),
         el('div', { className: 'robse-cta-editor__fields' },
-          field('見出し', 'heading', false),
-          field('説明', 'body', true),
-          field('ボタン文言', 'buttonLabel', false),
-          field('リンクURL', 'buttonUrl', false)
+          field(__('Heading', 'robse-one-blocks'), 'heading', false),
+          field(__('Description', 'robse-one-blocks'), 'body', true),
+          field(__('Button text', 'robse-one-blocks'), 'buttonLabel', false),
+          field(__('Link URL', 'robse-one-blocks'), 'buttonUrl', false)
         )
       );
     },

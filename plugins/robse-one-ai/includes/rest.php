@@ -53,50 +53,67 @@ function robse_one_ai_api_key() {
 
 function robse_one_ai_generate( WP_REST_Request $request ) {
 	if ( ! $request->get_param( 'consent' ) ) {
-		return new WP_Error( 'robse_one_ai_consent_required', __( '外部AIへの送信に同意してください。', 'robse-one-ai' ), array( 'status' => 400 ) );
+		return new WP_Error( 'robse_one_ai_consent_required', __( 'Please agree to sending your input to the external AI service.', 'robse-one-ai' ), array( 'status' => 400 ) );
 	}
 	$key = robse_one_ai_api_key();
 	if ( '' === $key ) {
-		return new WP_Error( 'robse_one_ai_not_configured', __( 'AI設定にAPIキーを登録してください。', 'robse-one-ai' ), array( 'status' => 400 ) );
+		return new WP_Error( 'robse_one_ai_not_configured', __( 'Add an API key in AI settings.', 'robse-one-ai' ), array( 'status' => 400 ) );
 	}
 	$user_id = get_current_user_id();
 	$rate_key = 'robse_one_ai_rate_' . $user_id;
 	if ( get_transient( $rate_key ) ) {
-		return new WP_Error( 'robse_one_ai_rate_limited', __( '続けて実行する場合は、しばらく待ってからお試しください。', 'robse-one-ai' ), array( 'status' => 429 ) );
+		return new WP_Error( 'robse_one_ai_rate_limited', __( 'Please wait a moment before running it again.', 'robse-one-ai' ), array( 'status' => 429 ) );
 	}
 	$brief = trim( (string) $request->get_param( 'brief' ) );
 	if ( robse_one_ai_text_length( $brief ) < 10 || robse_one_ai_text_length( $brief ) > 4000 ) {
-		return new WP_Error( 'robse_one_ai_invalid_brief', __( '依頼内容は10〜4000文字で入力してください。', 'robse-one-ai' ), array( 'status' => 400 ) );
+		return new WP_Error( 'robse_one_ai_invalid_brief', __( 'Enter a brief between 10 and 4000 characters.', 'robse-one-ai' ), array( 'status' => 400 ) );
 	}
 	set_transient( $rate_key, 1, 15 );
 
+	// Write the outline in the site's language (for example ja for Japanese sites).
+	$locale = determine_locale();
+	$input  = 'Create a WordPress landing page outline from the brief below, written in the language of the WordPress locale "' . $locale . '". Return a JSON object only, with keys title (short page title) and sections (3 to 8 objects, each with heading and body; body is plain text, 1 to 3 sentences). Do not include HTML, markdown, URLs, factual claims not in the brief, or personal data not supplied.' . "\n\nBrief:\n" . $brief;
+	$data = robse_one_ai_request_json( $input, $key );
+	if ( is_wp_error( $data ) ) { return $data; }
+	$outline = robse_one_ai_sanitize_outline( $data );
+	return is_wp_error( $outline ) ? $outline : rest_ensure_response( $outline );
+}
+
+function robse_one_ai_request_json( $input, $key ) {
 	$options = get_option( 'robse_one_ai_settings', array() );
 	$model = ! empty( $options['model'] ) ? sanitize_text_field( $options['model'] ) : 'gpt-5';
-	$input = "Create a Japanese WordPress landing page outline from the brief below. Return a JSON object only, with keys title (short Japanese page title) and sections (3 to 8 objects, each with heading and body; body is plain text, 1 to 3 sentences). Do not include HTML, markdown, URLs, factual claims not in the brief, or personal data not supplied.\n\nBrief:\n" . $brief;
+	$payload = array(
+		'model'             => $model,
+		'input'             => $input,
+		'text'              => array( 'format' => array( 'type' => 'json_object' ) ),
+		'store'             => false,
+		'max_output_tokens' => 4000,
+	);
+	// Reasoning tokens count toward max_output_tokens, so keep reasoning short on reasoning models.
+	if ( preg_match( '/^(gpt-5|o[0-9])/', $model ) && false === strpos( $model, '-chat' ) ) {
+		$payload['reasoning'] = array( 'effort' => 'low' );
+	}
 	$response = wp_remote_post(
 		'https://api.openai.com/v1/responses',
 		array(
-			'timeout' => 45,
+			'timeout' => 60,
 			'headers' => array(
 				'Authorization' => 'Bearer ' . $key,
 				'Content-Type'  => 'application/json',
 			),
-			'body'    => wp_json_encode( array(
-				'model'        => $model,
-				'input'        => $input,
-				'text'         => array( 'format' => array( 'type' => 'json_object' ) ),
-				'store'        => false,
-				'max_output_tokens' => 1400,
-			) ),
+			'body'    => wp_json_encode( $payload ),
 		)
 	);
 	if ( is_wp_error( $response ) ) {
-		return new WP_Error( 'robse_one_ai_request_failed', __( 'AIサービスに接続できませんでした。設定と通信環境を確認してください。', 'robse-one-ai' ), array( 'status' => 502 ) );
+		return new WP_Error( 'robse_one_ai_request_failed', __( 'Could not connect to the AI service. Check the settings and your network.', 'robse-one-ai' ), array( 'status' => 502 ) );
 	}
 	$status = wp_remote_retrieve_response_code( $response );
 	$body = json_decode( wp_remote_retrieve_body( $response ), true );
 	if ( $status < 200 || $status >= 300 ) {
-		return new WP_Error( 'robse_one_ai_provider_error', __( 'AIサービスからエラーが返されました。', 'robse-one-ai' ), array( 'status' => 502, 'provider_status' => $status ) );
+		return new WP_Error( 'robse_one_ai_provider_error', __( 'The AI service returned an error.', 'robse-one-ai' ), array( 'status' => 502, 'provider_status' => $status ) );
+	}
+	if ( isset( $body['status'] ) && 'incomplete' === $body['status'] ) {
+		return new WP_Error( 'robse_one_ai_output_incomplete', __( 'The AI stopped before finishing the outline. Shorten the brief or choose a different model, then try again.', 'robse-one-ai' ), array( 'status' => 502 ) );
 	}
 	$output_text = '';
 	if ( ! empty( $body['output'] ) && is_array( $body['output'] ) ) {
@@ -111,17 +128,12 @@ function robse_one_ai_generate( WP_REST_Request $request ) {
 			}
 		}
 	}
-	$data = json_decode( $output_text, true );
-	$outline = robse_one_ai_sanitize_outline( $data );
-	if ( is_wp_error( $outline ) ) {
-		return $outline;
-	}
-	return rest_ensure_response( $outline );
+	return json_decode( $output_text, true );
 }
 
 function robse_one_ai_sanitize_outline( $data, $error_status = 502 ) {
 	if ( ! is_array( $data ) || empty( $data['sections'] ) || ! is_array( $data['sections'] ) ) {
-		return new WP_Error( 'robse_one_ai_invalid_response', __( 'AIの出力を読み取れませんでした。依頼内容を変えて再試行してください。', 'robse-one-ai' ), array( 'status' => $error_status ) );
+		return new WP_Error( 'robse_one_ai_invalid_response', __( 'The AI output could not be read. Change the brief and try again.', 'robse-one-ai' ), array( 'status' => $error_status ) );
 	}
 	$title = isset( $data['title'] ) && is_string( $data['title'] ) ? sanitize_text_field( $data['title'] ) : '';
 	$title = robse_one_ai_text_limit( $title, 120 );
@@ -137,7 +149,7 @@ function robse_one_ai_sanitize_outline( $data, $error_status = 502 ) {
 		}
 	}
 	if ( '' === $title || count( $sections ) < 2 ) {
-		return new WP_Error( 'robse_one_ai_incomplete_response', __( 'ページ案に必要な内容が不足しています。依頼内容を変えて再試行してください。', 'robse-one-ai' ), array( 'status' => $error_status ) );
+		return new WP_Error( 'robse_one_ai_incomplete_response', __( 'The outline is missing required content. Change the brief and try again.', 'robse-one-ai' ), array( 'status' => $error_status ) );
 	}
 	return array( 'title' => $title, 'sections' => $sections );
 }
@@ -163,10 +175,10 @@ function robse_one_ai_build_content( $outline ) {
 		);
 		$group = array(
 			'blockName'    => 'core/group',
-			'attrs'        => array( 'className' => 'robse-ai-section', 'layout' => array( 'type' => 'constrained' ) ),
+			'attrs'        => array( 'align' => 'wide', 'className' => 'robse-ai-section', 'style' => array( 'spacing' => array( 'padding' => array( 'top' => '2.5rem', 'bottom' => '2.5rem' ) ) ), 'layout' => array( 'type' => 'constrained' ) ),
 			'innerBlocks'  => $section_blocks,
-			'innerHTML'    => '',
-			'innerContent' => array( null, null ),
+			'innerHTML'    => '<div class="wp-block-group alignwide robse-ai-section" style="padding-top:2.5rem;padding-bottom:2.5rem"></div>',
+			'innerContent' => array( '<div class="wp-block-group alignwide robse-ai-section" style="padding-top:2.5rem;padding-bottom:2.5rem">', null, null, '</div>' ),
 		);
 		$blocks[] = $group;
 	}

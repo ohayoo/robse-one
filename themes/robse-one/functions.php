@@ -11,7 +11,7 @@ function robse_one_setup() {
 	add_editor_style( 'assets/css/editor.css' );
 	add_theme_support( 'responsive-embeds' );
 	add_theme_support( 'wp-block-styles' );
-	register_block_pattern_category( 'robse-one', array( 'label' => __( 'ROBSE ONE セクション', 'robse-one' ) ) );
+	register_block_pattern_category( 'robse-one', array( 'label' => __( 'ROBSE ONE sections', 'robse-one' ) ) );
 }
 add_action( 'after_setup_theme', 'robse_one_setup' );
 
@@ -19,3 +19,23 @@ function robse_one_enqueue_styles() {
 	wp_enqueue_style( 'robse-one-theme', get_theme_file_uri( 'assets/css/theme.css' ), array(), wp_get_theme()->get( 'Version' ) );
 }
 add_action( 'wp_enqueue_scripts', 'robse_one_enqueue_styles' );
+
+require_once get_template_directory() . '/inc/getting-started.php';
+
+require_once get_template_directory() . '/inc/corporate-setup.php';
+
+add_filter( 'body_class', function ( $classes ) {
+	if ( is_page() ) {
+		$design = get_post_meta( get_queried_object_id(), '_robse_one_corporate_design', true );
+		if ( 'cover' === $design ) {
+			$classes[] = 'robse-corporate-cover';
+		} elseif ( in_array( $design, array( 'welfare-editorial', 'recruit-editorial' ), true ) ) {
+			$classes[] = 'robse-editorial-starter';
+			$classes[] = 'robse-' . $design;
+		} elseif ( in_array( $design, array( 'welfare', 'recruit' ), true ) ) {
+			$classes[] = 'robse-industry-starter';
+			$classes[] = 'robse-starter-' . $design;
+		}
+	}
+	return $classes;
+} );

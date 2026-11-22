@@ -1,0 +1,40 @@
+{
+  "version": 3,
+  "title": "Midnight",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "name": "Ink",
+          "slug": "ink",
+          "color": "#edf5f5"
+        },
+        {
+          "name": "Ocean",
+          "slug": "ocean",
+          "color": "#a8e4ed"
+        },
+        {
+          "name": "Mint",
+          "slug": "mint",
+          "color": "#213d45"
+        },
+        {
+          "name": "Paper",
+          "slug": "paper",
+          "color": "#142c33"
+        },
+        {
+          "name": "White",
+          "slug": "white",
+          "color": "#0d2027"
+        }
+      ]
+    },
+    "custom": {
+      "robse": {
+        "radius": "1rem"
+      }
+    }
+  }
+}

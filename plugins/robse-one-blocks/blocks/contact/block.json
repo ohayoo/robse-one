@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "robse-one/contact",
+  "title": "ROBSE Contact links",
+  "category": "widgets",
+  "icon": "phone",
+  "description": "Real phone and email links. No form submission or mail delivery service.",
+  "textdomain": "robse-one-blocks",
+  "attributes": {
+    "heading": {"type": "string"},
+    "phone": {"type": "string", "default": ""},
+    "email": {"type": "string", "default": ""}
+  },
+  "supports": {"html": false, "anchor": true},
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

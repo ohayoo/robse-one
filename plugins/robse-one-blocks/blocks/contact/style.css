@@ -1,0 +1,6 @@
+.robse-contact-links, .robse-contact-editor { padding: clamp(1.5rem, 4vw, 3rem); border-radius: var(--wp--custom--robse--radius, 1rem); background: var(--wp--preset--color--mint, #d9f2e8); color: var(--wp--preset--color--ink, #17232d); }
+.robse-contact-links h2, .robse-contact-links a { color: inherit; }
+.robse-contact-links a { display: inline-block; padding-block: .5rem; overflow-wrap: anywhere; }
+.robse-contact-links a:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
+.robse-contact-field { display: grid; gap: .25rem; margin-block: 1rem; }
+.robse-contact-field input { width: 100%; max-width: 36rem; box-sizing: border-box; padding: .5rem; font: inherit; }
